@@ -121,17 +121,26 @@
         <Column field="status" header="Estado" style="min-width: 10rem">
           <template #body="{ data }">
             <div v-if="data.status === 0">
-              <Button label="Validar Factura" severity="info" class="w-full" @click="validarFactura(data.number)" />
+              <Button
+                label="Validar Factura"
+                severity="info"
+                class="w-full"
+                @click="validarFactura(data.number)"
+              />
             </div>
             <div v-else>
-              <Button label="Ver Factura" class="w-full" />
+              <Button label="Ver Factura" class="w-full" @click="verFactura(data.number)" />
             </div>
           </template>
         </Column>
       </DataTable>
     </div>
   </div>
-  <DialogValidar v-model:visible="visible" :number="numberOrder" @validated="refetchData"/>
+  <DialogValidar
+    v-model:visible="visible"
+    :number="numberOrder"
+    @validated="refetchData"
+  />
 </template>
 
 <script setup lang="ts">
@@ -163,10 +172,27 @@ const validarFactura = (number: string) => {
   numberOrder.value = number;
   visible.value = true;
 };
+const options = {
+  refetchOnWindowFocus: false,
+  refetchOnMount: false,
+  retryOnMount: false,
+  enabled: false,
+};
+const dataFactu = ref<any>();
+const { data: dataVer, isFetched: isFetchedVer, refetch: refetchVer} = facturasService.useVerFactura(numberOrder.value, options);
+
+const verFactura = (numero: string) => {
+  numberOrder.value = numero;
+  options.refetchOnMount = true;
+  options.refetchOnWindowFocus = true;
+  options.retryOnMount = true;
+  options.enabled = true;
+  refetchVer();
+};
 
 const refetchData = () => {
   refetch();
-}
+};
 
 onMounted(() => {
   dataFacturas.value = data.value?.data as Facturas;
@@ -176,5 +202,12 @@ onMounted(() => {
 watch(isFetched, () => {
   dataFacturas.value = data.value?.data as Facturas;
   dataVaules.value = dataFacturas?.value?.data ?? [];
+});
+
+onMounted(() => {
+  dataFactu.value = dataVer.value?.data;
+});
+watch(isFetchedVer, () => {
+  dataFactu.value = dataVer.value?.data;
 });
 </script>
