@@ -27,6 +27,15 @@ import Menubar from 'primevue/menubar';
 import Avatar from 'primevue/avatar';
 import Menu from 'primevue/menu';
 
+
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import ColumnGroup from 'primevue/columngroup';   // optional
+import Row from 'primevue/row';    
+
+import  Tag  from 'primevue/tag';
+
+
 const app = createApp(App)
 app.use(router); 
 app.use(createPinia());
@@ -59,4 +68,11 @@ app.component('StepPanel', StepPanel)
 app.component('Menubar', Menubar)
 app.component('Avatar', Avatar)
 app.component('Menu', Menu)
+
+app.component('DataTable', DataTable);
+app.component('Column', Column);
+app.component('ColumnGroup', ColumnGroup);
+app.component('Row', Row);
+
+app.component('Tag', Tag);
 app.mount('#app')

@@ -104,7 +104,6 @@ import DatosGenerales from "./DatosGenerales.vue";
 import DatosFacturacion from "./DatosFacturacion.vue";
 import DatosProducto from "./DatosProducto.vue";
 import DatosCliente from "./DatosCliente.vue";
-import Navbar from "../Navbar.vue";
 
 const addDatageneral = (data: any) => {
   console.log(data);
