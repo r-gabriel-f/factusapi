@@ -8,6 +8,8 @@ import router from './router';
 import Aura from '@primevue/themes/aura'
 import { createPinia } from 'pinia';
 import { VueQueryPlugin } from '@tanstack/vue-query';
+
+import ToastService from 'primevue/toastservice';
 import Button from 'primevue/button';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
@@ -33,10 +35,16 @@ import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';   // optional
 import Row from 'primevue/row';    
 
+import Dialog from 'primevue/dialog';
+
+
+import Toast from 'primevue/toast';
+
 import  Tag  from 'primevue/tag';
 
 
 const app = createApp(App)
+app.use(ToastService);
 app.use(router); 
 app.use(createPinia());
 app.use(VueQueryPlugin);
@@ -75,4 +83,8 @@ app.component('ColumnGroup', ColumnGroup);
 app.component('Row', Row);
 
 app.component('Tag', Tag);
+
+app.component('Dialog', Dialog);
+
+app.component('Toast', Toast);
 app.mount('#app')

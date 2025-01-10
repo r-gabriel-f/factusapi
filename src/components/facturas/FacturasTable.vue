@@ -11,6 +11,9 @@
         dataKey="id"
         filterDisplay="row"
         :loading="isLoading"
+        responsiveLayout="scroll"
+        scrollable
+        scrollHeight="900px"
       >
         <template #empty> No se encontraron facturas. </template>
         <template #loading>
@@ -117,12 +120,18 @@
         </Column>
         <Column field="status" header="Estado" style="min-width: 10rem">
           <template #body="{ data }">
-            {{ data.status }}
+            <div v-if="data.status === 0">
+              <Button label="Validar Factura" severity="info" class="w-full" @click="validarFactura(data.number)" />
+            </div>
+            <div v-else>
+              <Button label="Ver Factura" class="w-full" />
+            </div>
           </template>
         </Column>
       </DataTable>
     </div>
   </div>
+  <DialogValidar v-model:visible="visible" :number="numberOrder" @validated="refetchData"/>
 </template>
 
 <script setup lang="ts">
@@ -130,22 +139,34 @@ import { onMounted, ref, watch } from "vue";
 import type { Datum, Facturas } from "../../models/facturas";
 import facturasService from "../../services/Factus/facturas.service";
 import { FilterMatchMode } from "@primevue/core/api";
+import DialogValidar from "./DialogValidar.vue";
 
 const dataFacturas = ref<Facturas>();
 const dataVaules = ref<Datum[]>([]);
+const visible = ref(false);
 
-const { data, isFetched, isLoading } = facturasService.useListQuery();
+const { data, isFetched, isLoading, refetch } = facturasService.useListQuery();
 
 const filters = ref({
-  id: { value: null, matchMode: FilterMatchMode.STARTS_WITH  },
-  number: { value: null, matchMode: FilterMatchMode.STARTS_WITH  },
-  names: { value: null, matchMode: FilterMatchMode.STARTS_WITH  },
-  identification: { value: null, matchMode: FilterMatchMode.STARTS_WITH  },
-  total: { value: null, matchMode: FilterMatchMode.STARTS_WITH  },
+  id: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+  number: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+  names: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+  identification: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+  total: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
 
-  created_at: { value: null, matchMode: FilterMatchMode.STARTS_WITH  },
-  status: { value: null, matchMode: FilterMatchMode.STARTS_WITH  },
+  created_at: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+  status: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
 });
+const numberOrder = ref("");
+
+const validarFactura = (number: string) => {
+  numberOrder.value = number;
+  visible.value = true;
+};
+
+const refetchData = () => {
+  refetch();
+}
 
 onMounted(() => {
   dataFacturas.value = data.value?.data as Facturas;

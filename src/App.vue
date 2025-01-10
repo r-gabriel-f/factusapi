@@ -8,7 +8,7 @@ const route = useRoute();
 <template>
   <div>
     <Navbar v-if="route.name !== 'Login'" />
-    <div class="m-5">
+    <div>
       <router-view />
     </div>
   </div>
