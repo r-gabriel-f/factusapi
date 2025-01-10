@@ -17,7 +17,7 @@
               <div
                 class="w-full border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
               >
-                <DatosGenerales />
+                <DatosGenerales @submitData="addDatageneral"/>
               </div>
               <div class="flex pt-6 justify-end w-full">
                 <Button
@@ -34,7 +34,7 @@
               <div
                 class="w-full border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
               >
-                <DatosFacturacion />
+                <DatosFacturacion @addFacturacion="addFacturacion" />
               </div>
               <div class="flex pt-6 justify-between w-full">
                 <Button
@@ -57,7 +57,7 @@
               <div
                 class="w-full border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
               >
-                <DatosCliente />
+                <DatosCliente @addCliente="addCliente" />
               </div>
               <div class="flex pt-6 justify-between w-full">
                 <Button
@@ -106,4 +106,14 @@ import DatosGenerales from "./DatosGenerales.vue";
 import DatosFacturacion from "./DatosFacturacion.vue";
 import DatosProducto from "./DatosProducto.vue";
 import DatosCliente from "./DatosCliente.vue";
+
+const addDatageneral = (data: any) => {
+  console.log(data);
+};
+const addCliente = (data: any) => {
+  console.log(data);
+};
+const addFacturacion = (data: any) => {
+  console.log(data);
+};
 </script>

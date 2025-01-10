@@ -1,120 +1,65 @@
 <template>
   <div class="card">
-      <div class="grid grid-cols-4 gap-5">
-        <div class="flex flex-col space-y-2">
-          <label for="identificationDocumentId">Tipo de Identificación</label>
-          <Select
-            v-model="identification_document_id"
-            :options="tiposDeDocumento"
-            optionLabel="nombre"
-            placeholder="Seleccione un tipo de identificación"
-            class="w-full"
-            filter
-          />
-        </div>
-        <div class="flex flex-col space-y-2">
-          <label for="identificationNumber">Número de Identificación</label>
-          <InputText
-            id="identificationNumber"
-            v-model="identification"
-            placeholder="Ingrese el número de identificación"
-          />
-        </div>
-        <div class="flex flex-col space-y-2">
-          <label for="verificationDigit">Dígito de Verificación</label>
-          <InputText
-            id="verificationDigit"
-            v-model="dv"
-            placeholder="Ingrese el dígito de verificación (opcional)"
-          />
-        </div>
-        <div class="flex flex-col space-y-2">
-          <label for="company">Razón Social</label>
-          <InputText
-            id="company"
-            v-model="company"
-            placeholder="Ingrese la razón social (opcional)"
-          />
-        </div>
-        <div class="flex flex-col space-y-2">
-          <label for="tradeName">Nombre Comercial</label>
-          <InputText
-            id="tradeName"
-            v-model="trade_name"
-            placeholder="Ingrese el nombre comercial (opcional)"
-          />
-        </div>
-        <div class="flex flex-col space-y-2">
-          <label for="names">Nombres</label>
-          <InputText
-            id="names"
-            v-model="names"
-            placeholder="Ingrese los nombres (opcional)"
-          />
-        </div>
-        <div class="flex flex-col space-y-2">
-          <label for="address">Dirección</label>
-          <InputText
-            id="address"
-            v-model="address"
-            placeholder="Ingrese la dirección (opcional)"
-          />
-        </div>
-        <div class="flex flex-col space-y-2">
-          <label for="email">Correo Electrónico</label>
-          <InputText
-            id="email"
-            v-model="email"
-            placeholder="Ingrese el correo electrónico (opcional)"
-          />
-        </div>
-        <div class="flex flex-col space-y-2">
-          <label for="phone">Teléfono</label>
-          <InputText
-            id="phone"
-            v-model="phone"
-            placeholder="Ingrese el número de teléfono (opcional)"
-          />
-        </div>
-        <div class="flex flex-col space-y-2">
-          <label for="legalOrganizationId">ID Tipo de Organización</label>
-          <Select
-            v-model="legal_organization_id"
-            :options="tipoDeOrganizacion"
-            optionLabel="nombre"
-            placeholder="Ingrese el ID del tipo de organización"
-            class="w-full"
-            filter
-          />
-        </div>
-        <div class="flex flex-col space-y-2">
-          <label for="tributeId">ID del Tributo</label>
-          <Select
-            v-model="tribute_id"
-            :options="dataProducts"
-            optionLabel="name"
-            placeholder="Ingrese el ID del tributo"
-            class="w-full"
-            filter
-          />
-        </div>
-        <div class="flex flex-col space-y-2">
-          <label for="municipalityId">ID Municipio</label>
-          <Select
-            v-model="municipality_id"
-            :options="dataMunicipios"
-            optionLabel="name"
-            placeholder="Ingrese el ID del municipio"
-            class="w-full"
-            filter
-          />
-        </div>
+    <div class="grid grid-cols-4 gap-5">
+      <div class="flex flex-col space-y-2">
+        <label for="identificationDocumentId">Tipo de Identificación</label>
+        <Select v-model="identification_document_id" :options="tiposDeDocumento" optionLabel="nombre" optionValue="id"
+          placeholder="Seleccione un tipo de identificación" class="w-full" filter />
       </div>
+      <div class="flex flex-col space-y-2">
+        <label for="identificationNumber">Número de Identificación</label>
+        <InputText id="identificationNumber" v-model="identification"
+          placeholder="Ingrese el número de identificación" />
+      </div>
+      <div class="flex flex-col space-y-2">
+        <label for="verificationDigit">Dígito de Verificación</label>
+        <InputText id="verificationDigit" v-model="dv" placeholder="Ingrese el dígito de verificación (opcional)" />
+      </div>
+      <div class="flex flex-col space-y-2">
+        <label for="company">Razón Social</label>
+        <InputText id="company" v-model="company" placeholder="Ingrese la razón social (opcional)" />
+      </div>
+      <div class="flex flex-col space-y-2">
+        <label for="tradeName">Nombre Comercial</label>
+        <InputText id="tradeName" v-model="trade_name" placeholder="Ingrese el nombre comercial (opcional)" />
+      </div>
+      <div class="flex flex-col space-y-2">
+        <label for="names">Nombres</label>
+        <InputText id="names" v-model="names" placeholder="Ingrese los nombres (opcional)" />
+      </div>
+      <div class="flex flex-col space-y-2">
+        <label for="address">Dirección</label>
+        <InputText id="address" v-model="address" placeholder="Ingrese la dirección (opcional)" />
+      </div>
+      <div class="flex flex-col space-y-2">
+        <label for="email">Correo Electrónico</label>
+        <InputText id="email" v-model="email" placeholder="Ingrese el correo electrónico (opcional)" />
+      </div>
+      <div class="flex flex-col space-y-2">
+        <label for="phone">Teléfono</label>
+        <InputText id="phone" v-model="phone" placeholder="Ingrese el número de teléfono (opcional)" />
+      </div>
+      <div class="flex flex-col space-y-2">
+        <label for="legalOrganizationId">ID Tipo de Organización</label>
+        <Select v-model="legal_organization_id" :options="tipoDeOrganizacion" optionLabel="nombre" optionValue="id"
+          placeholder="Ingrese el ID del tipo de organización" class="w-full" filter />
+      </div>
+      <div class="flex flex-col space-y-2">
+        <label for="tributeId">ID del Tributo</label>
+        <Select v-model="tribute_id" :options="dataProducts" optionLabel="name" optionValue="id" placeholder="Ingrese el ID del tributo"
+          class="w-full" filter />
+      </div>
+      <div class="flex flex-col space-y-2">
+        <label for="municipalityId">ID Municipio</label>
+        <Select v-model="municipality_id" :options="dataMunicipios" optionLabel="name" optionValue="id"
+          placeholder="Ingrese el ID del municipio" class="w-full" filter />
+      </div>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
-import productsService  from "../services/Factus/atributes.service";
+import productsService from "../services/Factus/atributes.service";
 import type { Product } from "../models/product";
 import type { Municipio } from "../models/municipio";
 import municipioService from "../services/Factus/municipio.service";
@@ -130,6 +75,28 @@ const phone = ref("");
 const legal_organization_id = ref("");
 const tribute_id = ref("");
 const municipality_id = ref("");
+
+
+const emit = defineEmits(["addCliente"]);
+
+const emitClienteData = () => {
+  const customerData = {
+    identification: identification.value,
+    dv: dv.value || "",
+    company: company.value || "",
+    trade_name: trade_name.value || "",
+    names: names.value || "",
+    address: address.value || "",
+    email: email.value || "",
+    phone: phone.value || "",
+    legal_organization_id: legal_organization_id.value || "",
+    tribute_id: tribute_id.value || "",
+    identification_document_id: identification_document_id.value || "",
+    municipality_id: municipality_id.value || "",
+  };
+
+  emit("addCliente", customerData);
+};
 
 const tiposDeDocumento = [
   { id: 1, nombre: "Registro civil" },
@@ -173,4 +140,8 @@ onMounted(() => {
 watch(isFetchingMunicipalities, () => {
   dataMunicipios.value = dataMunicipalities.value?.data ?? [];
 })
+
+watch([identification_document_id, identification, dv, company, trade_name, names, address, email, phone, legal_organization_id, tribute_id], () => {
+  emitClienteData();
+});
 </script>

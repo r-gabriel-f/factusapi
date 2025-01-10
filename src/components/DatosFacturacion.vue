@@ -21,10 +21,29 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import { formatDate, formatToEndOfDay } from "../assets/externo";
 
 const startDate = ref<Date>();
 const startTime = ref<Date>();
 const endDate = ref<Date>();
 const endTime = ref<Date>();
+
+const emit = defineEmits(["addFacturacion"]);
+
+const emitFacturacion = () => {
+  const faturacion = {
+    startDate: formatDate(startDate.value as Date),
+    startTime: formatToEndOfDay(startTime.value as Date),
+    endDate: formatDate(endDate.value as Date),
+    endTime: formatToEndOfDay(endTime.value as Date),
+    
+  };
+  console.log(faturacion);
+  emit("addFacturacion", faturacion);
+};
+
+watch([startDate, startTime, endDate, endTime], () => {
+  emitFacturacion();
+});
 </script>

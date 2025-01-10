@@ -8,6 +8,7 @@
             v-model="numberingRange"
             :options="dataRango"
             optionLabel="document"
+            optionValue="id"
             placeholder="Seleccione un rango"
             class="w-full"
             filter
@@ -47,6 +48,7 @@
             v-model="paymentMethod"
             :options="mediosDePago"
             optionLabel="nombre"
+            optionValue="id"
             placeholder="Seleccione un medio de pago"
             class="w-full"
             filter
@@ -60,6 +62,7 @@
 import { onMounted, ref, watch } from "vue";
 import rangosdenumeracionService from "../services/Factus/rangosdenumeracion.service";
 import type { Rangosdenumeracion } from "../models/rangosdenumeracion";
+import { formatDate } from "../assets/externo";
 
 const numberingRange = ref("");
 const referenceCode = ref("");
@@ -85,10 +88,30 @@ const mediosDePago = [
   { id: "ZZZ", nombre: "Otro*" },
 ];
 
+const emit = defineEmits(["submitData"]);
+
+const addDatageneral = () => {
+  const dataGeneral = {
+    numberingRange: numberingRange.value,
+    referenceCode: referenceCode.value,
+    observation: observation.value,
+    paymentForm: paymentForm.value,
+    paymentDueDate: formatDate(paymentDueDate.value ?? new Date()),
+    paymentMethod: paymentMethod.value,
+  };
+  emit("submitData", dataGeneral);
+};
+
+
 onMounted(() => {
   dataRango.value = data.value?.data ?? [];
 });
 watch(isFetched, () => {
   dataRango.value = data.value?.data ?? [];
 });
+
+watch([numberingRange, referenceCode, observation, paymentForm, paymentDueDate, paymentMethod], () => {
+  addDatageneral();
+});
+
 </script>
