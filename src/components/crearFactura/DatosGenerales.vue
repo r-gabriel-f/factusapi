@@ -60,9 +60,9 @@
 </template>
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
-import rangosdenumeracionService from "../services/Factus/rangosdenumeracion.service";
-import type { Rangosdenumeracion } from "../models/rangosdenumeracion";
-import { formatDate } from "../assets/externo";
+import rangosdenumeracionService from "../../services/Factus/rangosdenumeracion.service";
+import type { Rangosdenumeracion } from "../../models/rangosdenumeracion";
+import { formatDate } from "../../constants/externo";
 
 const numberingRange = ref("");
 const referenceCode = ref("");

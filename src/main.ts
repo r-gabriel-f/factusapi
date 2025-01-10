@@ -23,7 +23,9 @@ import StepPanels from 'primevue/steppanels';
 import StepItem from 'primevue/stepitem';
 import Step from 'primevue/step';
 import StepPanel from 'primevue/steppanel';
-
+import Menubar from 'primevue/menubar';
+import Avatar from 'primevue/avatar';
+import Menu from 'primevue/menu';
 
 const app = createApp(App)
 app.use(router); 
@@ -32,9 +34,9 @@ app.use(VueQueryPlugin);
 app.use(PrimeVue, {
   theme: {
     preset: Aura,
-    options: {
-      darkModeSelector: '.my-app-dark'
-    }
+    // options: {
+    //   darkModeSelector: '.my-app-dark'
+    // }
   }
 })
 
@@ -53,4 +55,8 @@ app.component('StepPanels', StepPanels)
 app.component('StepItem', StepItem)
 app.component('Step', Step)
 app.component('StepPanel', StepPanel)
+
+app.component('Menubar', Menubar)
+app.component('Avatar', Avatar)
+app.component('Menu', Menu)
 app.mount('#app')

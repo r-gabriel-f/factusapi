@@ -7,19 +7,24 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      redirect: { name: 'Login' }, // Redirige automáticamente a Login
+      redirect: { name: 'Login' },
     },
 
     {
       path: '/login',
       name: 'Login',
-      component: Login, // Asegúrate de usar la ruta '/login' para Login
+      component: Login,
     },
 
     {
+      path: '/verfacturas',
+      name: 'VerFacturas',
+      component: () => import('../components/facturas/FacturasTable.vue'),
+    },
+    {
       path: '/facturacion',
       name: 'Facturacion',
-      component: () => import('../components/Facturacion.vue'),
+      component: () => import('../components/crearFactura/Facturacion.vue'),
     },
   ],
 });

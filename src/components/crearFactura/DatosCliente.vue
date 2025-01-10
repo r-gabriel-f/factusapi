@@ -59,10 +59,10 @@
 </template>
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
-import productsService from "../services/Factus/atributes.service";
-import type { Product } from "../models/product";
-import type { Municipio } from "../models/municipio";
-import municipioService from "../services/Factus/municipio.service";
+import productsService from "../../services/Factus/atributes.service";
+import type { Product } from "../../models/product";
+import type { Municipio } from "../../models/municipio";
+import municipioService from "../../services/Factus/municipio.service";
 const identification_document_id = ref("");
 const identification = ref("");
 const dv = ref("");

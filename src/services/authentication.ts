@@ -35,3 +35,13 @@ export const login = async ({
 
   return response.data;
 };
+
+export const logout = (): void => {
+  localStorage.removeItem("access_token");
+  localStorage.removeItem("refresh_token");
+  localStorage.removeItem("token_type");
+  localStorage.removeItem("expires_at");
+
+  window.location.href = "/login";
+};
+

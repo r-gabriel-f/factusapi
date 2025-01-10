@@ -1,36 +1,39 @@
 <template>
-  <div class="card flex justify-center">
-    <div v-focustrap class="w-full sm:w-80 flex flex-col gap-6">
-      <IconField>
-        <InputIcon>
-          <i class="pi pi-envelope" />
-        </InputIcon>
-        <InputText
-          id="email"
-          v-model="userForm.email"
-          type="email"
-          placeholder="email"
-          autofocus
-          fluid
-        />
-      </IconField>
+  <div class="flex items-center justify-center min-h-screen">
+    <div class="card flex justify-center">
+      <div v-focustrap class="w-full sm:w-80 flex flex-col gap-6">
+        <IconField>
+          <InputIcon>
+            <i class="pi pi-envelope" />
+          </InputIcon>
+          <InputText
+            id="email"
+            v-model="userForm.email"
+            type="email"
+            placeholder="email"
+            autofocus
+            fluid
+          />
+        </IconField>
 
-      <IconField>
-        <InputIcon>
-          <i class="pi pi-key" />
-        </InputIcon>
-        <InputText
-          id="password"
-          v-model="userForm.password"
-          type="text"
-          placeholder="password"
-          fluid
-        />
-      </IconField>
-      <Button label="Submit" class="mt-2" @click="loginObtener" />
+        <IconField>
+          <InputIcon>
+            <i class="pi pi-key" />
+          </InputIcon>
+          <InputText
+            id="password"
+            v-model="userForm.password"
+            type="text"
+            placeholder="password"
+            fluid
+          />
+        </IconField>
+        <Button label="Submit" class="mt-2" @click="loginObtener" />
+      </div>
     </div>
   </div>
 </template>
+
 
 <script setup lang="ts">
 import { ref } from "vue";
@@ -48,7 +51,7 @@ const loginObtener = async () => {
     const tokenData = await login(userForm.value);
     if (tokenData && tokenData.access_token && tokenData.expires_in) {
       setTimeout(() => {
-        router.push({ name: "Facturacion" });
+        router.push({ name: "VerFacturas" });
       }, 2000);
     } else {
       console.error("Error: Datos de token incompletos");

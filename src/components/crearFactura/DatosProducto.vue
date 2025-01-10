@@ -80,10 +80,10 @@
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
-import unidadmedidaService from "../services/Factus/unidadmedida.service";
-import productsService from "../services/Factus/atributes.service";
-import type { Unidadmedida } from "../models/unidadmedida";
-import type { Product } from "../models/product";
+import unidadmedidaService from "../../services/Factus/unidadmedida.service";
+import productsService from "../../services/Factus/atributes.service";
+import type { Unidadmedida } from "../../models/unidadmedida";
+import type { Product } from "../../models/product";
 
 const code_reference = ref("");
 const name = ref("");

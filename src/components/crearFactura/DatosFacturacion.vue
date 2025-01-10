@@ -22,7 +22,7 @@
 </template>
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import { formatDate, formatToEndOfDay } from "../assets/externo";
+import { formatDate, formatToEndOfDay } from "../../constants/externo";
 
 const startDate = ref<Date>();
 const startTime = ref<Date>();

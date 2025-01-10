@@ -1,9 +1,15 @@
 <script setup lang="ts">
-import { defineComponent } from 'vue';
+import Navbar from "./components/Navbar.vue";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
 </script>
 
 <template>
   <div>
-    <router-view />
+    <Navbar v-if="route.name !== 'Login'" />
+    <div class="m-5">
+      <router-view />
+    </div>
   </div>
 </template>
