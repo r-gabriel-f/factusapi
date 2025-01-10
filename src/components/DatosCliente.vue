@@ -1,6 +1,5 @@
 <template>
   <div class="card">
-    <Fieldset legend="Información del Cliente">
       <div class="grid grid-cols-4 gap-5">
         <div class="flex flex-col space-y-2">
           <label for="identificationDocumentId">Tipo de Identificación</label>
@@ -111,7 +110,6 @@
           />
         </div>
       </div>
-    </Fieldset>
   </div>
 </template>
 <script setup lang="ts">

@@ -17,6 +17,14 @@ import Fieldset from 'primevue/fieldset';
 import Calendar from 'primevue/calendar';
 import Select from 'primevue/select';
 
+import Stepper from 'primevue/stepper';
+import StepList from 'primevue/steplist';
+import StepPanels from 'primevue/steppanels';
+import StepItem from 'primevue/stepitem';
+import Step from 'primevue/step';
+import StepPanel from 'primevue/steppanel';
+
+
 const app = createApp(App)
 app.use(router); 
 app.use(createPinia());
@@ -38,4 +46,11 @@ app.component('Fieldset', Fieldset)
 app.component('ToggleSwitch', ToggleSwitch)
 app.component('Calendar', Calendar)
 app.component('Select', Select)
+
+app.component('Stepper', Stepper)
+app.component('StepList', StepList)
+app.component('StepPanels', StepPanels)
+app.component('StepItem', StepItem)
+app.component('Step', Step)
+app.component('StepPanel', StepPanel)
 app.mount('#app')

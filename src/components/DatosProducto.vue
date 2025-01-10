@@ -1,56 +1,59 @@
 <template>
-  <div class="card">
-    <Fieldset legend="Productos o Servicios">
-      <div class="grid grid-cols-2 gap-5">
-        <div class="flex flex-col space-y-2">
-          <label for="codeReference">Código de Referencia</label>
-          <InputText id="codeReference" v-model="code_reference" placeholder="Ingrese el código de referencia" />
-        </div>
-        <div class="flex flex-col space-y-2">
-          <label for="name">Nombre del Producto</label>
-          <InputText id="name" v-model="name" placeholder="Ingrese el nombre del producto o servicio" />
-        </div>
-        <div class="flex flex-col space-y-2">
-          <label for="quantity">Cantidad</label>
-          <InputText id="quantity" v-model="quantity" placeholder="Ingrese la cantidad" type="text" />
-        </div>
-        <div class="flex flex-col space-y-2">
-          <label for="price">Precio</label>
-          <InputText id="price" v-model="price" placeholder="Ingrese el precio" type="text" />
-        </div>
-        <div class="flex flex-col space-y-2">
-          <label for="discountRate">Tasa de Descuento (%)</label>
-          <InputText id="discountRate" v-model="discount_rate" placeholder="Ingrese la tasa de descuento" type="text" />
-        </div>
-        <div class="flex flex-col space-y-2">
-          <label for="taxRate">Tasa de Impuesto (%)</label>
-          <InputText id="taxRate" v-model="tax_rate" placeholder="Ingrese la tasa de impuesto" type="text" />
-        </div>
-        <div class="flex flex-col space-y-2">
-          <label for="unitMeasureId">ID Unidad de Medida</label>
-          <Select v-model="unit_measure_id" :options="dataUnidadMedida" optionLabel="name"
-            placeholder="Ingrese el ID de la unidad de medida" class="w-full" filter />
-        </div>
-        <div class="flex flex-col space-y-2">
-          <label for="standardCodeId">ID Código de Estándar</label>
-          <Select v-model="standard_code_id" :options="dataIdentificacion" optionLabel="nombre"
-            placeholder="Ingrese el ID del código estándar" class="w-full" filter />
-        </div>
-        <div class="flex flex-col space-y-2">
-          <label for="isExcluded">Excluido de IVA</label>
-          <Select v-model="is_excluded" :options="dataIva" optionLabel="nombre" placeholder="Ingrese el ID del IVA"
-            class="w-full" />
-        </div>
-        <div class="flex flex-col space-y-2">
-          <label for="tributeId">ID del Tributo</label>
-          <Select v-model="tribute_id" :options="dataTribute" optionLabel="name" placeholder="Ingrese el ID del tributo"
-            class="w-full" filter />
-        </div>
-        <div class="card flex justify-center gap-2">
-          <p>Retenciones</p>
-          <ToggleSwitch v-model="withholdingEnabled" />
-        </div>
-        <div v-if="withholdingEnabled">
+  <div class="card mx-5">
+    <div class="grid grid-cols-5 gap-5">
+      <div class="flex flex-col space-y-2">
+        <label for="codeReference">Código de Referencia</label>
+        <InputText id="codeReference" v-model="code_reference" placeholder="Ingrese el código de referencia" />
+      </div>
+      <div class="flex flex-col space-y-2">
+        <label for="name">Nombre del Producto</label>
+        <InputText id="name" v-model="name" placeholder="Ingrese el nombre del producto o servicio" />
+      </div>
+      <div class="flex flex-col space-y-2">
+        <label for="quantity">Cantidad</label>
+        <InputText id="quantity" v-model="quantity" placeholder="Ingrese la cantidad" type="text" />
+      </div>
+      <div class="flex flex-col space-y-2">
+        <label for="price">Precio</label>
+        <InputText id="price" v-model="price" placeholder="Ingrese el precio" type="text" />
+      </div>
+      <div class="flex flex-col space-y-2">
+        <label for="discountRate">Tasa de Descuento (%)</label>
+        <InputText id="discountRate" v-model="discount_rate" placeholder="Ingrese la tasa de descuento" type="text" />
+      </div>
+      <div class="flex flex-col space-y-2">
+        <label for="taxRate">Tasa de Impuesto (%)</label>
+        <InputText id="taxRate" v-model="tax_rate" placeholder="Ingrese la tasa de impuesto" type="text" />
+      </div>
+      <div class="flex flex-col space-y-2">
+        <label for="unitMeasureId">ID Unidad de Medida</label>
+        <Select v-model="unit_measure_id" :options="dataUnidadMedida" optionLabel="name"
+          placeholder="Ingrese el ID de la unidad de medida" class="w-full" filter />
+      </div>
+      <div class="flex flex-col space-y-2">
+        <label for="standardCodeId">ID Código de Estándar</label>
+        <Select v-model="standard_code_id" :options="dataIdentificacion" optionLabel="nombre"
+          placeholder="Ingrese el ID del código estándar" class="w-full" filter />
+      </div>
+      <div class="flex flex-col space-y-2">
+        <label for="isExcluded">Excluido de IVA</label>
+        <Select v-model="is_excluded" :options="dataIva" optionLabel="nombre" placeholder="Ingrese el ID del IVA"
+          class="w-full" />
+      </div>
+      <div class="flex flex-col space-y-2">
+        <label for="tributeId">ID del Tributo</label>
+        <Select v-model="tribute_id" :options="dataTribute" optionLabel="name" placeholder="Ingrese el ID del tributo"
+          class="w-full" filter />
+      </div>
+    </div>
+    <div class="my-5">
+      <div class="card flex justify-center gap-2">
+        <p>Retenciones</p>
+        <ToggleSwitch v-model="withholdingEnabled" />
+      </div>
+      <div v-if="withholdingEnabled">
+        <Button label="Agregar Retención" icon="pi pi-plus" />
+        <div class="grid grid-cols-4 gap-5">
           <div class="col-span-2 flex flex-col space-y-2">
             <label for="withholdingCode">Retención - Código</label>
             <Select v-model="withholdingCode" :options="dataTribute" optionLabel="code"
@@ -63,7 +66,10 @@
           </div>
         </div>
       </div>
-    </Fieldset>
+    </div>
+    <div class="flex justify-end">
+      <Button label="Agregar Producto" icon="pi pi-plus" />
+    </div>
   </div>
 </template>
 <script setup lang="ts">

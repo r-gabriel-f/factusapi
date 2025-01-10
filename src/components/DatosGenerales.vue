@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <Fieldset legend="Datos Generales de la Factura">
+    
       <div class="grid grid-cols-3 gap-5">
         <div class="col-12 md:col-6 flex flex-col space-y-2 w-full">
           <label for="numberingRange">Rango de Numeración</label>
@@ -53,7 +53,7 @@
           />
         </div>
       </div>
-    </Fieldset>
+
   </div>
 </template>
 <script setup lang="ts">

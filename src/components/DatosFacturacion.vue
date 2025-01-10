@@ -1,6 +1,5 @@
 <template>
   <div class="card">
-    <Fieldset legend="Periodo de Facturación">
       <div class="grid grid-cols-2 gap-5">
         <div class="col-12 flex flex-col space-y-2">
           <label for="startDate">Fecha de Inicio</label>
@@ -19,7 +18,6 @@
           <Calendar id="calendar-timeonly" v-model="endTime" timeOnly />
         </div>
       </div>
-    </Fieldset>
   </div>
 </template>
 <script setup lang="ts">
