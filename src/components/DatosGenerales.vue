@@ -65,7 +65,7 @@ const numberingRange = ref("");
 const referenceCode = ref("");
 const observation = ref("");
 const paymentForm = ref("");
-const paymentDueDate = ref("");
+const paymentDueDate = ref<Date>();
 const paymentMethod = ref("");
 
 const dataRango = ref<Rangosdenumeracion[]>([]);

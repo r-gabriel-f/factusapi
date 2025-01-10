@@ -25,8 +25,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const startDate = ref("");
-const startTime = ref("");
-const endDate = ref("");
-const endTime = ref("");
+const startDate = ref<Date>();
+const startTime = ref<Date>();
+const endDate = ref<Date>();
+const endTime = ref<Date>();
 </script>

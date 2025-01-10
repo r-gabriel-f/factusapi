@@ -45,13 +45,10 @@ const userForm = ref({
 
 const loginObtener = async () => {
   try {
-    // Llamar al servicio de login y recibir los datos del token
     const tokenData = await login(userForm.value);
-
-    // Verificar que tokenData contiene la respuesta esperada
     if (tokenData && tokenData.access_token && tokenData.expires_in) {
       setTimeout(() => {
-        router.push({ name: "Facturacion" }); // Redirigir a la página de facturación
+        router.push({ name: "Facturacion" });
       }, 2000);
     } else {
       console.error("Error: Datos de token incompletos");
