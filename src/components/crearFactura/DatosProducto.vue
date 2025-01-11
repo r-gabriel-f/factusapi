@@ -163,6 +163,7 @@
           label="Agregar Retención"
           icon="pi pi-plus"
           @click="addRetention"
+          class="my-2"
         />
 
         <div v-for="(retention, index) in retentions" :key="index" class="mt-4">
@@ -217,7 +218,7 @@
           </div>
           <Button
             icon="pi pi-trash"
-            class="p-button-danger mt-2"
+            class="p-button-danger my-2"
             @click="removeRetention(index)"
           />
         </div>

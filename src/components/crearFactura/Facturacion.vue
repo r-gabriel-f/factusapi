@@ -60,9 +60,9 @@
             </div>
           </StepPanel>
           <StepPanel v-slot="{ activateCallback }" value="3">
-            <div class="flex flex-col h-[700px] items-center justify-center">
+            <div class="flex flex-col items-center justify-center">
               <div
-                class="w-full border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
+                class="w-full border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium overflow-y-auto min-h-[700px]"
               >
                 <DatosCliente
                   @addCliente="addCliente"
@@ -89,9 +89,9 @@
             </div>
           </StepPanel>
           <StepPanel v-slot="{ activateCallback }" value="4">
-            <div class="flex flex-col h-[700px] items-center justify-center">
+            <div class="flex flex-col items-center justify-center">
               <div
-                class="w-full border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
+                class="w-full border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium overflow-y-auto min-h-[700px] p-4"
               >
                 <DatosProducto @addProduct="addProduct" />
               </div>
