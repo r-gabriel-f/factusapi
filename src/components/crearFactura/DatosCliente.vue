@@ -46,7 +46,7 @@
       </div>
       <div class="flex flex-col space-y-2">
         <label for="tributeId">ID del Tributo</label>
-        <Select v-model="tribute_id" :options="dataProducts" optionLabel="name" optionValue="id" placeholder="Ingrese el ID del tributo"
+        <Select v-model="tribute_id" :options="dataProducts" optionLabel="nombre" optionValue="id" placeholder="Ingrese el ID del tributo"
           class="w-full" filter />
       </div>
       <div class="flex flex-col space-y-2">
@@ -59,8 +59,6 @@
 </template>
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
-import productsService from "../../services/Factus/atributes.service";
-import type { Product } from "../../models/product";
 import type { Municipio } from "../../models/municipio";
 import municipioService from "../../services/Factus/municipio.service";
 const identification_document_id = ref("");
@@ -89,10 +87,10 @@ const emitClienteData = () => {
     address: address.value || "",
     email: email.value || "",
     phone: phone.value || "",
-    legal_organization_id: legal_organization_id.value || "",
-    tribute_id: tribute_id.value || "",
-    identification_document_id: identification_document_id.value || "",
-    municipality_id: municipality_id.value || "",
+    legal_organization_id: legal_organization_id.value.toString() || "",
+    tribute_id: tribute_id.value.toString() || "",
+    identification_document_id: identification_document_id.value.toString() || "",
+    municipality_id: municipality_id.value.toString() || "",
   };
 
   emit("addCliente", customerData);
@@ -117,21 +115,14 @@ const tipoDeOrganizacion = [
   { id: 2, nombre: "Persona Natural" },
 ];
 
-const dataProducts = ref<Product[]>([]);
-const { data, isFetched } = productsService.useListQuery();
-
-
+const dataProducts = [
+  { id: 18, nombre: "IVA" },
+  { id: 21, nombre: "No aplica" },
+];
 
 const dataMunicipios = ref<Municipio[]>([]);
 const { data: dataMunicipalities, isFetched: isFetchingMunicipalities } = municipioService.useListQuery();
 
-onMounted(() => {
-  dataProducts.value = data.value?.data ?? [];
-});
-
-watch(isFetched, () => {
-  dataProducts.value = data.value?.data ?? [];
-})
 
 onMounted(() => {
   dataMunicipios.value = dataMunicipalities.value?.data ?? [];

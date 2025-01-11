@@ -69,7 +69,7 @@ const referenceCode = ref("");
 const observation = ref("");
 const paymentForm = ref("");
 const paymentDueDate = ref<Date>();
-const paymentMethod = ref("");
+const paymentMethod = ref<string>("");
 
 const dataRango = ref<Rangosdenumeracion[]>([]);
 
@@ -97,7 +97,7 @@ const addDatageneral = () => {
     observation: observation.value,
     payment_form: paymentForm.value,
     payment_due_date: formatDate(paymentDueDate.value ?? new Date()),
-    payment_method_code: paymentMethod.value,
+    payment_method_code: paymentMethod.value.toString(),
   };
   emit("submitData", dataGeneral);
 };

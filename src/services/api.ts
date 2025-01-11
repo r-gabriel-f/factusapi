@@ -36,7 +36,6 @@ instance.interceptors.response.use(
         )}`;
         return instance.request(error.config);
       } catch (refreshError) {
-        console.error("Error al refrescar el token:", refreshError);
         localStorage.clear();
         window.location.href = "/";
         return Promise.reject(refreshError);

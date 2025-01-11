@@ -3,7 +3,7 @@
     <div class="text-center">
       <h1 class="text-2xl font-bold mb-6">Facturas Registradas</h1>
     </div>
-
+    <Toast />
     <div class="card">
       <DataTable
         v-model:filters="filters"
@@ -180,7 +180,8 @@ import facturasService from "../../services/Factus/facturas.service";
 import { FilterMatchMode } from "@primevue/core/api";
 import DialogValidar from "./DialogValidar.vue";
 import type { Dian } from "../../models/dian";
-
+import { useToast } from "primevue";
+const toast = useToast();
 const dataFacturas = ref<Facturas>();
 const dataVaules = ref<Datum[]>([]);
 const visible = ref(false);
@@ -204,7 +205,6 @@ const filters = ref({
 const numberOrder = ref<string | null>(null);
 
 const validarFactura = (number: string) => {
-  console.log(number);
   numberOrder.value = number;
   visible.value = true;
 };
@@ -242,7 +242,12 @@ const verFactura = async (numero: string) => {
       pdfDialogVisible.value = true;
     }
   } catch (error) {
-    console.error(error);
+    toast.add({
+      severity: "error",
+      summary: "Error",
+      detail: error,
+      life: 3000,
+    })
   }
 };
 
@@ -269,7 +274,12 @@ const verDian = async (numero: string) => {
 
     window.open(dianswoh, "_blank");
   } catch (error) {
-    console.error(error);
+    toast.add({
+      severity: "error",
+      summary: "Error",
+      detail: error,
+      life: 3000,
+    })
   }
 };
 const descargarFactura = async (numero: string) => {
@@ -296,7 +306,12 @@ const descargarFactura = async (numero: string) => {
       link.click();
     }
   } catch (error) {
-    console.error("Error al descargar la factura:", error);
+    toast.add({
+      severity: "error",
+      summary: "Error",
+      detail: error,
+      life: 3000,
+    })
   }
 };
 

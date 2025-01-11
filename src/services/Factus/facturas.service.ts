@@ -23,6 +23,22 @@ export default new (class FacturasService extends QueryService<Facturas> {
     });
   }
 
+  useCrearFactura() {
+    return useMutation({
+      mutationKey: [`${this.key}_create`, "create"],
+      mutationFn: async (createFacture: FormData) => {
+        return await this.service
+          .post<null>(`${this.resource}/store`, createFacture)
+          .then((res) => {
+            return res.data;
+          })
+          .catch((err) => {
+            throw new Error(err.response?.data?.message ?? "An error occurred");
+          });
+      },
+    });
+  }
+
 
   useVerFactura(numero: Ref<string | null>, options?: { 
     refetchOnWindowFocus?: boolean | 'always'; 

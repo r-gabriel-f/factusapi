@@ -4,6 +4,7 @@
       <h1 class="text-2xl font-bold mb-6">Facturación</h1>
     </div>
     <div class="card flex justify-center w-full">
+      <Toast />
       <Stepper value="1" class="w-full">
         <StepList>
           <Step value="1">Datos Generales de la Factura</Step>
@@ -111,7 +112,11 @@ import DatosGenerales from "./DatosGenerales.vue";
 import DatosFacturacion from "./DatosFacturacion.vue";
 import DatosProducto from "./DatosProducto.vue";
 import DatosCliente from "./DatosCliente.vue";
-
+import facturasService from "../../services/Factus/facturas.service";
+import { useToast } from "primevue/usetoast";
+import { useRouter } from "vue-router";
+const router = useRouter();
+const toast = useToast();
 const dataGeneral = ref<any>();
 const dataFacturacion = ref<any>();
 const dataCliente = ref<any>();
@@ -129,14 +134,30 @@ const addFacturacion = (data: any) => {
 const addProduct = (data: any) => {
   dataProduct.value = data;
 };
-
-const crearFactura = () => {
+const { mutateAsync } = facturasService.useCrearFactura();
+async function crearFactura () {
   const payload = {
     ...dataGeneral.value,
     billing_period : dataFacturacion.value,
     customer: dataCliente.value,
     items: dataProduct.value
   }
-  console.log(payload);
+  try {
+    await mutateAsync(payload);
+    toast.add({
+      severity: "success",
+      summary: "Factura Validada",
+      detail: "Factura Creada",
+      life: 3000,
+    });
+    router.push({ name: "VerFacturas" });
+  } catch (error) {
+    toast.add({
+      severity: "error",
+      summary: "Error",
+      detail: error,
+      life: 3000,
+    });
+  }
 };
 </script>

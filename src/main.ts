@@ -41,6 +41,7 @@ import Dialog from 'primevue/dialog';
 import Toast from 'primevue/toast';
 
 import  Tag  from 'primevue/tag';
+import InputNumber from 'primevue/inputnumber';
 
 
 const app = createApp(App)
@@ -87,4 +88,6 @@ app.component('Tag', Tag);
 app.component('Dialog', Dialog);
 
 app.component('Toast', Toast);
+
+app.component('InputNumber', InputNumber);
 app.mount('#app')

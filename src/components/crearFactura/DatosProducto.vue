@@ -11,15 +11,15 @@
       </div>
       <div class="flex flex-col space-y-2">
         <label for="quantity">Cantidad</label>
-        <InputText id="quantity" v-model="quantity" placeholder="Ingrese la cantidad" type="text" />
+        <InputNumber v-model="quantity" inputId="integeronly" fluid />
       </div>
       <div class="flex flex-col space-y-2">
         <label for="price">Precio</label>
-        <InputText id="price" v-model="price" placeholder="Ingrese el precio" type="text" />
+        <InputNumber v-model="price" inputId="integeronly" fluid />
       </div>
       <div class="flex flex-col space-y-2">
         <label for="discountRate">Tasa de Descuento (%)</label>
-        <InputText id="discountRate" v-model="discount_rate" placeholder="Ingrese la tasa de descuento" type="text" />
+        <InputNumber v-model="discount_rate" inputId="integeronly" fluid />
       </div>
       <div class="flex flex-col space-y-2">
         <label for="taxRate">Tasa de Impuesto (%)</label>
@@ -87,9 +87,9 @@ import type { Product } from "../../models/product";
 
 const code_reference = ref("");
 const name = ref("");
-const quantity = ref('');
-const price = ref('');
-const discount_rate = ref('');
+const quantity = ref<number>(0);
+const price = ref<number>(0);
+const discount_rate = ref<number>(0);
 const tax_rate = ref('');
 const unit_measure_id = ref("");
 const standard_code_id = ref("");
@@ -145,9 +145,9 @@ const addProduct = () => {
 const resetForm = () => {
   code_reference.value = "";
   name.value = "";
-  quantity.value = "";
-  price.value = "";
-  discount_rate.value = "";
+  quantity.value = 0;
+  price.value = 0;
+  discount_rate.value = 0;
   tax_rate.value = "";
   unit_measure_id.value = "";
   standard_code_id.value = "";

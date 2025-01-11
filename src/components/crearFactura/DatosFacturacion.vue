@@ -39,7 +39,6 @@ const emitFacturacion = () => {
     end_time: formatToEndOfDay(endTime.value as Date),
     
   };
-  console.log(faturacion);
   emit("addFacturacion", faturacion);
 };
 
