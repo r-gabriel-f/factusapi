@@ -92,12 +92,12 @@ const emit = defineEmits(["submitData"]);
 
 const addDatageneral = () => {
   const dataGeneral = {
-    numberingRange: numberingRange.value,
-    referenceCode: referenceCode.value,
+    numbering_range_id: numberingRange.value,
+    reference_code: referenceCode.value,
     observation: observation.value,
-    paymentForm: paymentForm.value,
-    paymentDueDate: formatDate(paymentDueDate.value ?? new Date()),
-    paymentMethod: paymentMethod.value,
+    payment_form: paymentForm.value,
+    payment_due_date: formatDate(paymentDueDate.value ?? new Date()),
+    payment_method_code: paymentMethod.value,
   };
   emit("submitData", dataGeneral);
 };

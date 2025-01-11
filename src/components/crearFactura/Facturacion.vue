@@ -80,7 +80,7 @@
               <div
                 class="w-full border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
               >
-                <DatosProducto />
+                <DatosProducto @addProduct="addProduct"/>
               </div>
               <div class="flex pt-6 justify-between w-full">
                 <Button
@@ -88,6 +88,12 @@
                   severity="secondary"
                   icon="pi pi-arrow-left"
                   @click="activateCallback('3')"
+                />
+                <Button
+                  label="Crear Factura"
+                  icon="pi pi-check"
+                  iconPos="right"
+                  @click="crearFactura"
                 />
               </div>
             </div>
@@ -100,18 +106,37 @@
 
 
 <script setup lang="ts">
+import { ref } from "vue";
 import DatosGenerales from "./DatosGenerales.vue";
 import DatosFacturacion from "./DatosFacturacion.vue";
 import DatosProducto from "./DatosProducto.vue";
 import DatosCliente from "./DatosCliente.vue";
 
+const dataGeneral = ref<any>();
+const dataFacturacion = ref<any>();
+const dataCliente = ref<any>();
+const dataProduct = ref<any>();
+
 const addDatageneral = (data: any) => {
-  console.log(data);
+  dataGeneral.value = data;
 };
 const addCliente = (data: any) => {
-  console.log(data);
+  dataCliente.value = data;
 };
 const addFacturacion = (data: any) => {
-  console.log(data);
+  dataFacturacion.value = data;
+};
+const addProduct = (data: any) => {
+  dataProduct.value = data;
+};
+
+const crearFactura = () => {
+  const payload = {
+    ...dataGeneral.value,
+    billing_period : dataFacturacion.value,
+    customer: dataCliente.value,
+    items: dataProduct.value
+  }
+  console.log(payload);
 };
 </script>

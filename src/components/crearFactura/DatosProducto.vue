@@ -64,7 +64,7 @@
             </div>
             <div class="col-span-2 flex flex-col space-y-2">
               <label :for="'withholdingRate' + index">Retención - Tasa (%)</label>
-              <InputText :id="'withholdingRate' + index" v-model="retention.rate"
+              <InputText :id="'withholdingRate' + index" v-model="retention.withholding_tax_rate"
                 placeholder="Ingrese la tasa de la retención" type="text" />
             </div>
           </div>
@@ -100,7 +100,7 @@ const withholdingEnabled = ref(false);
 
 interface Retention {
   code: string;
-  rate: string;
+  withholding_tax_rate: string;
 }
 
 const retentions = ref<Retention[]>([]);
@@ -113,7 +113,7 @@ const handleSelectChange = (index: number, event: any) => {
 const addRetention = () => {
   retentions.value.push({
     code: "",
-    rate: ""
+    withholding_tax_rate: ""
   });
 };
 
@@ -121,6 +121,7 @@ const removeRetention = (index: number) => {
   retentions.value.splice(index, 1);
 };
 const items = ref<any>([]);
+const emit = defineEmits(["addProduct"]);
 const addProduct = () => {
   const productData = {
     code_reference: code_reference.value,
@@ -136,6 +137,7 @@ const addProduct = () => {
     withholding_taxes: withholdingEnabled.value ? retentions.value : []
   };
   items.value.push(productData);
+  emit("addProduct", items.value);
   resetForm();
 };
 

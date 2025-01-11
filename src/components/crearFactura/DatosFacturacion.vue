@@ -33,10 +33,10 @@ const emit = defineEmits(["addFacturacion"]);
 
 const emitFacturacion = () => {
   const faturacion = {
-    startDate: formatDate(startDate.value as Date),
-    startTime: formatToEndOfDay(startTime.value as Date),
-    endDate: formatDate(endDate.value as Date),
-    endTime: formatToEndOfDay(endTime.value as Date),
+    start_date: formatDate(startDate.value as Date),
+    start_time: formatToEndOfDay(startTime.value as Date),
+    end_date: formatDate(endDate.value as Date),
+    end_time: formatToEndOfDay(endTime.value as Date),
     
   };
   console.log(faturacion);
