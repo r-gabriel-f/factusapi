@@ -44,6 +44,27 @@ export default new (class FacturasService extends QueryService<Facturas> {
       ...options,
     });
   }
+
+  useDianSowh(numero: Ref<string | null>, options?: { 
+    refetchOnWindowFocus?: boolean | 'always'; 
+    refetchOnMount?: boolean | 'always'; 
+    retryOnMount?: boolean; 
+    enabled?: boolean; 
+  }) {
+    return useQuery({
+      queryKey: [`${this.key}_dian_show`, numero],
+      queryFn: async () => {
+        const numeroValue = unref(numero);
+        return await this.service
+          .get(`${this.resource}/show/${numeroValue}`)
+          .then((res) => res.data)
+          .catch((err) => {
+            throw new Error(err.response?.data?.message ?? "An error occurred");
+          });
+      },
+      ...options,
+    });
+  }
   
 
 })();

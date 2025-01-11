@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="m-5">
     <div class="text-center">
       <h1 class="text-2xl font-bold mb-6">Facturas Registradas</h1>
     </div>
@@ -129,8 +129,23 @@
               />
             </div>
             <div v-else>
-              <Button label="Ver Factura" class="w-full" @click="verFactura(data.number)" />
-            </div>
+        <div class="flex justify-center">
+          <Button
+            type="button"
+            label="Factura"
+            @click="toggle($event, data.number)" 
+            aria-haspopup="true"
+            aria-controls="overlay_menu"
+            class="w-full"
+          />
+          <Menu
+            ref="menu"
+            id="overlay_menu"
+            :model="getMenuItems(data.number)" 
+            :popup="true"
+          />
+        </div>
+      </div>
           </template>
         </Column>
       </DataTable>
@@ -141,19 +156,19 @@
     :number="numberOrder ?? ''"
     @validated="refetchData"
   />
-  <Dialog 
-    v-model:visible="pdfDialogVisible" 
-    modal 
-    :style="{ width: '90vw', height: '90vh' }" 
+  <Dialog
+    v-model:visible="pdfDialogVisible"
+    modal
+    :style="{ width: '90vw', height: '90vh' }"
     :maximizable="true"
   >
     <template #header>
       <h2>Vista de Factura</h2>
     </template>
-    <iframe 
-      v-if="pdfUrl" 
-      :src="pdfUrl" 
-      style="width: 100%; height: 90vh; border: none;"
+    <iframe
+      v-if="pdfUrl"
+      :src="pdfUrl"
+      style="width: 100%; height: 90vh; border: none"
     ></iframe>
   </Dialog>
 </template>
@@ -164,6 +179,7 @@ import type { Datum, Facturas, Verfactura } from "../../models/facturas";
 import facturasService from "../../services/Factus/facturas.service";
 import { FilterMatchMode } from "@primevue/core/api";
 import DialogValidar from "./DialogValidar.vue";
+import type { Dian } from "../../models/dian";
 
 const dataFacturas = ref<Facturas>();
 const dataVaules = ref<Datum[]>([]);
@@ -187,23 +203,23 @@ const filters = ref({
 });
 const numberOrder = ref<string | null>(null);
 
-
 const validarFactura = (number: string) => {
   console.log(number);
   numberOrder.value = number;
   visible.value = true;
 };
 const options = {
-  refetchOnWindowFocus : false,
+  refetchOnWindowFocus: false,
   refetchOnMount: false,
-  retryOnMount    : false,
+  retryOnMount: false,
   enabled: false,
+};
 
-}
-
-const { data: dataVer, isFetching: isFetchedVer, refetch: refetchVer } = facturasService.useVerFactura(
-  numberOrder, options
-);
+const {
+  data: dataVer,
+  isFetching: isFetchedVer,
+  refetch: refetchVer,
+} = facturasService.useVerFactura(numberOrder, options);
 
 const verFactura = async (numero: string) => {
   try {
@@ -215,13 +231,13 @@ const verFactura = async (numero: string) => {
     if (base64Data) {
       const byteCharacters = atob(base64Data);
       const byteNumbers = new Array(byteCharacters.length);
-      
+
       for (let i = 0; i < byteCharacters.length; i++) {
         byteNumbers[i] = byteCharacters.charCodeAt(i);
       }
-      
+
       const byteArray = new Uint8Array(byteNumbers);
-      const blob = new Blob([byteArray], { type: 'application/pdf' });
+      const blob = new Blob([byteArray], { type: "application/pdf" });
       pdfUrl.value = URL.createObjectURL(blob);
       pdfDialogVisible.value = true;
     }
@@ -230,12 +246,87 @@ const verFactura = async (numero: string) => {
   }
 };
 
-watch(pdfDialogVisible, (newValue) => {
-  if (!newValue && pdfUrl.value) {
-    URL.revokeObjectURL(pdfUrl.value);
-    pdfUrl.value = null;
+const optionsDian = {
+  refetchOnWindowFocus: false,
+  refetchOnMount: false,
+  retryOnMount: false,
+  enabled: false,
+};
+const infoDian = ref<Dian>();
+
+const {
+  data: dataDian,
+  isFetching: isFetchedDian,
+  refetch: refetchDian,
+} = facturasService.useDianSowh(numberOrder, optionsDian);
+
+const verDian = async (numero: string) => {
+  try {
+    numberOrder.value = numero;
+    optionsDian.enabled = true;
+    await refetchDian();
+    const dianswoh = infoDian?.value?.bill?.qr;
+
+    window.open(dianswoh, "_blank");
+  } catch (error) {
+    console.error(error);
   }
-});
+};
+const descargarFactura = async (numero: string) => {
+  try {
+    numberOrder.value = numero;
+    options.enabled = true;
+    await refetchVer();
+
+    const base64Data = dataFactu?.value?.pdf_base_64_encoded;
+    if (base64Data) {
+      const byteCharacters = atob(base64Data);
+      const byteNumbers = new Array(byteCharacters.length);
+
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: "application/pdf" });
+
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `${dataFactu?.value?.file_name}.pdf`;
+      link.click();
+    }
+  } catch (error) {
+    console.error("Error al descargar la factura:", error);
+  }
+};
+
+const menu = ref();
+const getMenuItems = (number: string) => {
+  return [{
+    items: [
+      {
+        label: "Ver Factura",
+        icon: "pi pi-book",
+        command: () => verFactura(number),
+      },
+      {
+        label: "Ver Dian",
+        icon: "pi pi-link",
+        command: () => verDian(number),
+      },
+      {
+        label: "Descargar Factura",
+        icon: "pi pi-download",
+        command: () => descargarFactura(number),
+      },
+    ],
+  }];
+};
+
+const toggle = (event: Event, number: string) => {
+  numberOrder.value = number;
+  menu.value.toggle(event);
+};
 
 const refetchData = () => {
   refetch();
@@ -259,4 +350,11 @@ watch(isFetchedVer, () => {
   dataFactu.value = dataVer.value?.data;
 });
 
+onMounted(() => {
+  infoDian.value = dataDian.value?.data;
+});
+
+watch(isFetchedDian, () => {
+  infoDian.value = dataDian.value?.data;
+});
 </script>

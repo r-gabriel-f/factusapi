@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="m-5">
     <div class="text-center">
       <h1 class="text-2xl font-bold mb-6">Facturación</h1>
     </div>
