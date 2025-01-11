@@ -7,10 +7,16 @@
       <Toast />
       <Stepper value="1" class="w-full">
         <StepList>
-          <Step value="1">Datos Generales de la Factura</Step>
-          <Step value="2">Periodo de Facturación</Step>
-          <Step value="3">Información del Cliente</Step>
-          <Step value="4">Datos del Producto</Step>
+          <Step value="1" class="pointer-events-none"
+            >Datos Generales de la Factura</Step
+          >
+          <Step value="2" class="pointer-events-none"
+            >Periodo de Facturación</Step
+          >
+          <Step value="3" class="pointer-events-none"
+            >Información del Cliente</Step
+          >
+          <Step value="4" class="pointer-events-none">Datos del Producto</Step>
         </StepList>
         <StepPanels>
           <StepPanel v-slot="{ activateCallback }" value="1">
@@ -109,7 +115,7 @@
                     icon="pi pi-check"
                     iconPos="right"
                     @click="crearFactura"
-                    :disabled="isCreating"
+                    :disabled="cont<=0 || isCreating"
                     :class="{ 'opacity-70': isCreating }"
                   />
                   <div
@@ -144,7 +150,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import DatosGenerales from "./DatosGenerales.vue";
 import DatosFacturacion from "./DatosFacturacion.vue";
 import DatosProducto from "./DatosProducto.vue";
@@ -160,6 +166,7 @@ const dataGeneral = ref<any>();
 const dataFacturacion = ref<any>();
 const dataCliente = ref<any>();
 const dataProduct = ref<any>();
+const cont = ref(0);
 
 const addDatageneral = (data: any) => {
   dataGeneral.value = data;
@@ -224,4 +231,7 @@ const canProceed = (currentStep: string) => {
   const stepKey = `step${currentStep}` as keyof typeof stepsValidation.value;
   return stepsValidation.value[stepKey];
 };
+watch(dataProduct, () => {
+  cont.value = dataProduct.value.length;
+});
 </script>

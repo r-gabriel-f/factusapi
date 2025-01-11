@@ -143,7 +143,7 @@
                 <Menu
                   ref="menu"
                   id="overlay_menu"
-                  :model="getMenuItems(data.number)"
+                  :model="getMenuItems()"
                   :popup="true"
                 />
               </div>
@@ -318,24 +318,24 @@ const descargarFactura = async (numero: string) => {
 };
 
 const menu = ref();
-const getMenuItems = (number: string) => {
+const getMenuItems = () => {
   return [
     {
       items: [
         {
           label: "Ver Factura",
           icon: "pi pi-book",
-          command: () => verFactura(number),
+          command: () => verFactura(numberOrder.value!),
         },
         {
           label: "Ver Dian",
           icon: "pi pi-link",
-          command: () => verDian(number),
+          command: () => verDian(numberOrder.value!),
         },
         {
           label: "Descargar Factura",
           icon: "pi pi-download",
-          command: () => descargarFactura(number),
+          command: () => descargarFactura(numberOrder.value!),
         },
       ],
     },
