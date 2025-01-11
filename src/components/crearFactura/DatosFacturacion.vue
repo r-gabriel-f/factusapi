@@ -1,7 +1,7 @@
 <template>
   <div class="card">
-    <div class="grid grid-cols-2 gap-5">
-      <div class="col-12 flex flex-col space-y-2">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 my-2">
+      <div class="flex flex-col space-y-2 w-full">
         <label for="startDate">Fecha de Inicio</label>
         <Calendar 
           v-model="startDate" 
@@ -13,7 +13,7 @@
           La fecha de inicio es requerida
         </small>
       </div>
-      <div class="col-12 flex flex-col space-y-2">
+      <div class="flex flex-col space-y-2 w-full">
         <label for="startTime">Hora de Inicio</label>
         <Calendar 
           id="calendar-timeonly" 
@@ -21,7 +21,7 @@
           timeOnly 
         />
       </div>
-      <div class="col-12 flex flex-col space-y-2">
+      <div class="flex flex-col space-y-2 w-full">
         <label for="endDate">Fecha de Fin</label>
         <Calendar 
           v-model="endDate" 
@@ -37,7 +37,7 @@
           La fecha de fin debe ser posterior a la fecha de inicio
         </small>
       </div>
-      <div class="col-12 flex flex-col space-y-2">
+      <div class="flex flex-col space-y-2 w-full">
         <label for="endTime">Hora de Fin</label>
         <Calendar 
           id="calendar-timeonly" 

@@ -1,7 +1,7 @@
 <template>
   <div class="card">
-    <div class="grid grid-cols-3 gap-5">
-      <div class="col-12 md:col-6 flex flex-col space-y-2 w-full">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-2">
+      <div class="flex flex-col space-y-2 w-full">
         <label for="numberingRange">
           Rango de Numeración {{ dataRango.length > 1 ? '*' : '' }}
         </label>
@@ -22,7 +22,7 @@
           Este campo es requerido cuando hay múltiples rangos activos
         </small>
       </div>
-      <div class="col-12 md:col-6 flex flex-col space-y-2">
+      <div class="flex flex-col space-y-2">
         <label for="referenceCode">Código de Referencia *</label>
         <InputText
           id="referenceCode"
@@ -34,7 +34,7 @@
           Este campo es requerido
         </small>
       </div>
-      <div class="col-12 md:col-6 flex flex-col space-y-2">
+      <div class="flex flex-col space-y-2">
         <label for="observation">Observación</label>
         <InputText
           id="observation"
@@ -42,7 +42,7 @@
           placeholder="Ingrese una observación"
         />
       </div>
-      <div class="col-12 md:col-6 flex flex-col space-y-2">
+      <div class="flex flex-col space-y-2">
         <label for="paymentForm">Forma de Pago</label>
         <Select
           v-model="paymentForm"
@@ -53,7 +53,7 @@
           class="min-w-full"
         />
       </div>
-      <div class="col-12 md:col-6 flex flex-col space-y-2">
+      <div class="flex flex-col space-y-2">
         <label for="paymentDueDate">
           Fecha de Vencimiento {{ isPaymentDueDateRequired ? '*' : '' }}
         </label>
@@ -70,7 +70,7 @@
           Este campo es requerido para pagos a crédito
         </small>
       </div>
-      <div class="col-12 md:col-6 flex flex-col space-y-2 w-full">
+      <div class="flex flex-col space-y-2 w-full">
         <label for="paymentMethod">Método de Pago</label>
         <Select
           v-model="paymentMethod"
@@ -85,6 +85,7 @@
     </div>
   </div>
 </template>
+
 
 <script setup lang="ts">
 import { onMounted, ref, watch, computed } from "vue";

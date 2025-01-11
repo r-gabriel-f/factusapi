@@ -1,6 +1,6 @@
 <template>
   <div class="card mx-5">
-    <div class="grid grid-cols-5 gap-5">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
       <div class="flex flex-col space-y-2">
         <label for="codeReference">Código de Referencia *</label>
         <InputText
@@ -166,11 +166,9 @@
         />
 
         <div v-for="(retention, index) in retentions" :key="index" class="mt-4">
-          <div class="grid grid-cols-4 gap-5">
-            <div class="col-span-2 flex flex-col space-y-2">
-              <label :for="'withholdingCode' + index"
-                >Retención - Código *</label
-              >
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-5">
+            <div class="col-span-2 sm:col-span-2 flex flex-col space-y-2">
+              <label :for="'withholdingCode' + index">Retención - Código *</label>
               <Select
                 :id="'withholdingCode' + index"
                 v-model="retention.code"
@@ -190,19 +188,13 @@
               />
               <small
                 class="text-red-500"
-                v-if="
-                  (showValidation || submitted) &&
-                  withholdingEnabled &&
-                  !retention.code
-                "
+                v-if="(showValidation || submitted) && withholdingEnabled && !retention.code"
               >
                 Este campo es requerido cuando se aplican retenciones
               </small>
             </div>
-            <div class="col-span-2 flex flex-col space-y-2">
-              <label :for="'withholdingRate' + index"
-                >Retención - Tasa (%) *</label
-              >
+            <div class="col-span-2 sm:col-span-2 flex flex-col space-y-2">
+              <label :for="'withholdingRate' + index">Retención - Tasa (%) *</label>
               <InputText
                 :id="'withholdingRate' + index"
                 v-model="retention.withholding_tax_rate"
@@ -217,11 +209,7 @@
               />
               <small
                 class="text-red-500"
-                v-if="
-                  (showValidation || submitted) &&
-                  withholdingEnabled &&
-                  !retention.withholding_tax_rate
-                "
+                v-if="(showValidation || submitted) && withholdingEnabled && !retention.withholding_tax_rate"
               >
                 Este campo es requerido cuando se aplican retenciones
               </small>
@@ -246,6 +234,7 @@
     </div>
   </div>
 </template>
+
 
 <script setup lang="ts">
 import { onMounted, ref, watch, computed } from "vue";
