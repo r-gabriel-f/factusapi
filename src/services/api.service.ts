@@ -15,7 +15,7 @@ abstract class ApiService<T> {
     return this.service.get(`${this.resource}`);
   }
 
-  getResource(id: number, params?: { [key: string]: any }): Promise<AxiosResponse<T>> {
+  getResource(id: number|string, params?: { [key: string]: any }): Promise<AxiosResponse<T>> {
     if (params) {
       return this.service.get(`${this.resource}/${id}`, { params });
     }

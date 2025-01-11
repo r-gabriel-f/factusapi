@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/vue-query";
 import type { Facturas } from "../../models/facturas";
 import QueryService from "../query.service";
+import { unref, type Ref } from "vue";
 
 export default new (class FacturasService extends QueryService<Facturas> {
   constructor() {
@@ -22,30 +23,27 @@ export default new (class FacturasService extends QueryService<Facturas> {
     });
   }
 
-  useVerFactura(
-    numero: string,
-    options?: {
-      refetchOnWindowFocus?: boolean | "always";
-      refetchOnMount?: boolean | "always";
-      retryOnMount?: boolean;
-      enabled?: boolean;
-    }
-  ) {
+
+  useVerFactura(numero: Ref<string | null>, options?: { 
+    refetchOnWindowFocus?: boolean | 'always'; 
+    refetchOnMount?: boolean | 'always'; 
+    retryOnMount?: boolean; 
+    enabled?: boolean; 
+  }) {
     return useQuery({
-      queryKey: [`${this.key}_ver`, numero],
+      queryKey: [`${this.key}_ver_factura`, numero],
       queryFn: async () => {
+        const numeroValue = unref(numero);
         return await this.service
-          .get<any>(`${this.resource}/download-pdf/${numero}`, {
-            responseType: "blob",
-          })
-          .then((res) => {
-            return res.data;
-          })
+          .get(`${this.resource}/download-pdf/${numeroValue}`)
+          .then((res) => res.data)
           .catch((err) => {
-            throw err;
+            throw new Error(err.response?.data?.message ?? "An error occurred");
           });
       },
       ...options,
     });
   }
+  
+
 })();

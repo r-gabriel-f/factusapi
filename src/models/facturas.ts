@@ -56,3 +56,8 @@ export type ItNote = {
   id?:     number;
   number?: string;
 }
+
+export type Verfactura = {
+  file_name?:           string;
+  pdf_base_64_encoded?: string;
+}

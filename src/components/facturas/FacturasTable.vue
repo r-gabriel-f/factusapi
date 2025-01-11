@@ -138,14 +138,29 @@
   </div>
   <DialogValidar
     v-model:visible="visible"
-    :number="numberOrder"
+    :number="numberOrder ?? ''"
     @validated="refetchData"
   />
+  <Dialog 
+    v-model:visible="pdfDialogVisible" 
+    modal 
+    :style="{ width: '90vw', height: '90vh' }" 
+    :maximizable="true"
+  >
+    <template #header>
+      <h2>Vista de Factura</h2>
+    </template>
+    <iframe 
+      v-if="pdfUrl" 
+      :src="pdfUrl" 
+      style="width: 100%; height: 90vh; border: none;"
+    ></iframe>
+  </Dialog>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
-import type { Datum, Facturas } from "../../models/facturas";
+import type { Datum, Facturas, Verfactura } from "../../models/facturas";
 import facturasService from "../../services/Factus/facturas.service";
 import { FilterMatchMode } from "@primevue/core/api";
 import DialogValidar from "./DialogValidar.vue";
@@ -153,8 +168,12 @@ import DialogValidar from "./DialogValidar.vue";
 const dataFacturas = ref<Facturas>();
 const dataVaules = ref<Datum[]>([]);
 const visible = ref(false);
-
+const dataFactu = ref<Verfactura>();
 const { data, isFetched, isLoading, refetch } = facturasService.useListQuery();
+
+// New refs for PDF handling
+const pdfDialogVisible = ref(false);
+const pdfUrl = ref<string | null>(null);
 
 const filters = ref({
   id: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
@@ -166,29 +185,57 @@ const filters = ref({
   created_at: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
   status: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
 });
-const numberOrder = ref("");
+const numberOrder = ref<string | null>(null);
+
 
 const validarFactura = (number: string) => {
+  console.log(number);
   numberOrder.value = number;
   visible.value = true;
 };
 const options = {
-  refetchOnWindowFocus: false,
+  refetchOnWindowFocus : false,
   refetchOnMount: false,
-  retryOnMount: false,
+  retryOnMount    : false,
   enabled: false,
-};
-const dataFactu = ref<any>();
-const { data: dataVer, isFetched: isFetchedVer, refetch: refetchVer} = facturasService.useVerFactura(numberOrder.value, options);
 
-const verFactura = (numero: string) => {
-  numberOrder.value = numero;
-  options.refetchOnMount = true;
-  options.refetchOnWindowFocus = true;
-  options.retryOnMount = true;
-  options.enabled = true;
-  refetchVer();
+}
+
+const { data: dataVer, isFetching: isFetchedVer, refetch: refetchVer } = facturasService.useVerFactura(
+  numberOrder, options
+);
+
+const verFactura = async (numero: string) => {
+  try {
+    numberOrder.value = numero;
+    options.enabled = true;
+    await refetchVer();
+
+    const base64Data = dataFactu?.value?.pdf_base_64_encoded;
+    if (base64Data) {
+      const byteCharacters = atob(base64Data);
+      const byteNumbers = new Array(byteCharacters.length);
+      
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: 'application/pdf' });
+      pdfUrl.value = URL.createObjectURL(blob);
+      pdfDialogVisible.value = true;
+    }
+  } catch (error) {
+    console.error(error);
+  }
 };
+
+watch(pdfDialogVisible, (newValue) => {
+  if (!newValue && pdfUrl.value) {
+    URL.revokeObjectURL(pdfUrl.value);
+    pdfUrl.value = null;
+  }
+});
 
 const refetchData = () => {
   refetch();
@@ -207,7 +254,9 @@ watch(isFetched, () => {
 onMounted(() => {
   dataFactu.value = dataVer.value?.data;
 });
+
 watch(isFetchedVer, () => {
   dataFactu.value = dataVer.value?.data;
 });
+
 </script>
