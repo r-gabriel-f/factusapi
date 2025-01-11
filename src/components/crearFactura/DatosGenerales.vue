@@ -64,16 +64,16 @@ import rangosdenumeracionService from "../../services/Factus/rangosdenumeracion.
 import type { Rangosdenumeracion } from "../../models/rangosdenumeracion";
 import { formatDate } from "../../constants/externo";
 
-const numberingRange = ref("");
-const referenceCode = ref("");
-const observation = ref("");
-const paymentForm = ref("");
+const numberingRange = ref('');
+const referenceCode = ref('');
+const observation = ref('');
+const paymentForm = ref('');
 const paymentDueDate = ref<Date>();
-const paymentMethod = ref<string>("");
+const paymentMethod = ref<string>('');
 
 const dataRango = ref<Rangosdenumeracion[]>([]);
 
-const { data, isFetched } = rangosdenumeracionService.useListQuery();
+const { data, isFetching } = rangosdenumeracionService.useListQuery();
 
 const mediosDePago = [
   { id: 10, nombre: "Efectivo" },
@@ -106,7 +106,7 @@ const addDatageneral = () => {
 onMounted(() => {
   dataRango.value = data.value?.data ?? [];
 });
-watch(isFetched, () => {
+watch(isFetching, () => {
   dataRango.value = data.value?.data ?? [];
 });
 

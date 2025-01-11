@@ -61,18 +61,18 @@
 import { onMounted, ref, watch } from "vue";
 import type { Municipio } from "../../models/municipio";
 import municipioService from "../../services/Factus/municipio.service";
-const identification_document_id = ref("");
-const identification = ref("");
-const dv = ref("");
-const company = ref("");
-const trade_name = ref("");
-const names = ref("");
-const address = ref("");
-const email = ref("");
-const phone = ref("");
-const legal_organization_id = ref("");
-const tribute_id = ref("");
-const municipality_id = ref("");
+const identification_document_id = ref('');
+const identification = ref('');
+const dv = ref('');
+const company = ref('');
+const trade_name = ref('');
+const names = ref('');
+const address = ref('');
+const email = ref('');
+const phone = ref('');
+const legal_organization_id = ref('');
+const tribute_id = ref('');
+const municipality_id = ref('');
 
 
 const emit = defineEmits(["addCliente"]);
@@ -80,17 +80,17 @@ const emit = defineEmits(["addCliente"]);
 const emitClienteData = () => {
   const customerData = {
     identification: identification.value,
-    dv: dv.value || "",
-    company: company.value || "",
-    trade_name: trade_name.value || "",
-    names: names.value || "",
-    address: address.value || "",
-    email: email.value || "",
-    phone: phone.value || "",
-    legal_organization_id: legal_organization_id.value.toString() || "",
-    tribute_id: tribute_id.value.toString() || "",
-    identification_document_id: identification_document_id.value.toString() || "",
-    municipality_id: municipality_id.value.toString() || "",
+    dv: dv.value || '',
+    company: company.value || '',
+    trade_name: trade_name.value || '',
+    names: names.value || '',
+    address: address.value || '',
+    email: email.value || '',
+    phone: phone.value || '',
+    legal_organization_id: legal_organization_id.value.toString() || '',
+    tribute_id: tribute_id.value.toString() || '',
+    identification_document_id: identification_document_id.value.toString() || '',
+    municipality_id: municipality_id.value.toString() || '',
   };
 
   emit("addCliente", customerData);
@@ -121,7 +121,7 @@ const dataProducts = [
 ];
 
 const dataMunicipios = ref<Municipio[]>([]);
-const { data: dataMunicipalities, isFetched: isFetchingMunicipalities } = municipioService.useListQuery();
+const { data: dataMunicipalities, isFetching: isFetchingMunicipalities } = municipioService.useListQuery();
 
 
 onMounted(() => {

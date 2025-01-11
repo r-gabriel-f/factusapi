@@ -186,9 +186,9 @@ const dataFacturas = ref<Facturas>();
 const dataVaules = ref<Datum[]>([]);
 const visible = ref(false);
 const dataFactu = ref<Verfactura>();
-const { data, isFetched, isLoading, refetch } = facturasService.useListQuery();
 
-// New refs for PDF handling
+const { data, isFetching, isLoading, refetch } = facturasService.useListQuery();
+
 const pdfDialogVisible = ref(false);
 const pdfUrl = ref<string | null>(null);
 
@@ -352,10 +352,11 @@ onMounted(() => {
   dataVaules.value = dataFacturas?.value?.data ?? [];
 });
 
-watch(isFetched, () => {
+watch(isFetching, () => {
   dataFacturas.value = data.value?.data as Facturas;
   dataVaules.value = dataFacturas?.value?.data ?? [];
 });
+
 
 onMounted(() => {
   dataFactu.value = dataVer.value?.data;

@@ -85,16 +85,16 @@ import productsService from "../../services/Factus/atributes.service";
 import type { Unidadmedida } from "../../models/unidadmedida";
 import type { Product } from "../../models/product";
 
-const code_reference = ref("");
-const name = ref("");
+const code_reference = ref('');
+const name = ref('');
 const quantity = ref<number>(0);
 const price = ref<number>(0);
 const discount_rate = ref<number>(0);
 const tax_rate = ref('');
-const unit_measure_id = ref("");
-const standard_code_id = ref("");
+const unit_measure_id = ref('');
+const standard_code_id = ref('');
 const is_excluded = ref(0);
-const tribute_id = ref("");
+const tribute_id = ref('');
 
 const withholdingEnabled = ref(false);
 
@@ -112,8 +112,8 @@ const handleSelectChange = (index: number, event: any) => {
 
 const addRetention = () => {
   retentions.value.push({
-    code: "",
-    withholding_tax_rate: ""
+    code: '',
+    withholding_tax_rate: '',
   });
 };
 
@@ -129,7 +129,7 @@ const addProduct = () => {
     quantity: quantity.value,
     price: price.value,
     discount_rate: discount_rate.value,
-    tax_rate: tax_rate.value,
+    tax_rate: parseFloat(tax_rate.value).toFixed(2),
     unit_measure_id: unit_measure_id.value,
     standard_code_id: standard_code_id.value,
     is_excluded: is_excluded.value,
@@ -143,16 +143,16 @@ const addProduct = () => {
 
 
 const resetForm = () => {
-  code_reference.value = "";
-  name.value = "";
+  code_reference.value = '';
+  name.value = '';
   quantity.value = 0;
   price.value = 0;
   discount_rate.value = 0;
-  tax_rate.value = "";
-  unit_measure_id.value = "";
-  standard_code_id.value = "";
+  tax_rate.value = '';
+  unit_measure_id.value = '';
+  standard_code_id.value = '';
   is_excluded.value = 0;
-  tribute_id.value = "";
+  tribute_id.value = '';
   withholdingEnabled.value = false;
   retentions.value = [];
 };
@@ -160,8 +160,8 @@ const resetForm = () => {
 const dataUnidadMedida = ref<Unidadmedida[]>([]);
 const dataTribute = ref<Product[]>([]);
 
-const { data, isFetched } = unidadmedidaService.useListQuery();
-const { data: datProduct, isFetched: isFetchedProduct } = productsService.useListQuery();
+const { data, isFetching } = unidadmedidaService.useListQuery();
+const { data: datProduct, isFetching: isFetchedProduct } = productsService.useListQuery();
 
 const dataIva = ref([
   { "id": 0, "name": "No" },
@@ -186,7 +186,7 @@ onMounted(() => {
   dataTribute.value = datProduct.value?.data ?? [];
 });
 
-watch(isFetched, () => {
+watch(isFetching, () => {
   dataUnidadMedida.value = data.value?.data ?? [];
 });
 

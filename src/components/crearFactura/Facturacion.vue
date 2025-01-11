@@ -142,6 +142,7 @@ async function crearFactura () {
     customer: dataCliente.value,
     items: dataProduct.value
   }
+  console.log(payload);
   try {
     await mutateAsync(payload);
     toast.add({

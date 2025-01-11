@@ -50,7 +50,7 @@ export type Link = {
   page?:   number;
 }
 
-export type Company = "" | "Halltec S.a.s";
+export type Company = '' | "Halltec S.a.s";
 
 export type ItNote = {
   id?:     number;
