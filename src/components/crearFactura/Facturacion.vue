@@ -18,7 +18,12 @@
               <div
                 class="w-full border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
               >
-                <DatosGenerales @submitData="addDatageneral" />
+                <DatosGenerales
+                  @submitData="addDatageneral"
+                  @validationChange="
+                    (isValid) => handleValidationChange('step1', isValid)
+                  "
+                />
               </div>
               <div class="flex pt-6 justify-end w-full">
                 <Button
@@ -26,6 +31,7 @@
                   icon="pi pi-arrow-right"
                   iconPos="right"
                   @click="activateCallback('2')"
+                  :disabled="!canProceed('1')"
                 />
               </div>
             </div>
@@ -58,7 +64,12 @@
               <div
                 class="w-full border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
               >
-                <DatosCliente @addCliente="addCliente" />
+                <DatosCliente
+                  @addCliente="addCliente"
+                  @validationChange="
+                    (isValid) => handleValidationChange('step3', isValid)
+                  "
+                />
               </div>
               <div class="flex pt-6 justify-between w-full">
                 <Button
@@ -72,6 +83,7 @@
                   icon="pi pi-arrow-right"
                   iconPos="right"
                   @click="activateCallback('4')"
+                  :disabled="!canProceed('3')"
                 />
               </div>
             </div>
@@ -193,4 +205,23 @@ async function crearFactura() {
     isCreating.value = false;
   }
 }
+
+const stepsValidation = ref({
+  step1: false,
+  step2: false,
+  step3: false,
+  step4: false,
+});
+
+const handleValidationChange = (
+  step: keyof typeof stepsValidation.value,
+  isValid: boolean
+) => {
+  stepsValidation.value[step] = isValid;
+};
+
+const canProceed = (currentStep: string) => {
+  const stepKey = `step${currentStep}` as keyof typeof stepsValidation.value;
+  return stepsValidation.value[stepKey];
+};
 </script>
