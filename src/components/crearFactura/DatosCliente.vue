@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-2">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 my-2">
       <div class="flex flex-col space-y-2">
         <label for="identificationDocumentId">Tipo de Identificación *</label>
         <Select 
