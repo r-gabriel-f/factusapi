@@ -17,7 +17,9 @@
       >
         <template #empty> No se encontraron facturas. </template>
         <template #loading>
-          Cargando datos de facturas. Por favor espere.
+          <div class="flex justify-center">
+            <ProgressSpinner />
+          </div>
         </template>
 
         <Column field="id" header="ID" style="min-width: 8rem">
@@ -129,23 +131,23 @@
               />
             </div>
             <div v-else>
-        <div class="flex justify-center">
-          <Button
-            type="button"
-            label="Factura"
-            @click="toggle($event, data.number)" 
-            aria-haspopup="true"
-            aria-controls="overlay_menu"
-            class="w-full"
-          />
-          <Menu
-            ref="menu"
-            id="overlay_menu"
-            :model="getMenuItems(data.number)" 
-            :popup="true"
-          />
-        </div>
-      </div>
+              <div class="flex justify-center">
+                <Button
+                  type="button"
+                  label="Factura"
+                  @click="toggle($event, data.number)"
+                  aria-haspopup="true"
+                  aria-controls="overlay_menu"
+                  class="w-full"
+                />
+                <Menu
+                  ref="menu"
+                  id="overlay_menu"
+                  :model="getMenuItems(data.number)"
+                  :popup="true"
+                />
+              </div>
+            </div>
           </template>
         </Column>
       </DataTable>
@@ -247,7 +249,7 @@ const verFactura = async (numero: string) => {
       summary: "Error",
       detail: error,
       life: 3000,
-    })
+    });
   }
 };
 
@@ -279,7 +281,7 @@ const verDian = async (numero: string) => {
       summary: "Error",
       detail: error,
       life: 3000,
-    })
+    });
   }
 };
 const descargarFactura = async (numero: string) => {
@@ -311,31 +313,33 @@ const descargarFactura = async (numero: string) => {
       summary: "Error",
       detail: error,
       life: 3000,
-    })
+    });
   }
 };
 
 const menu = ref();
 const getMenuItems = (number: string) => {
-  return [{
-    items: [
-      {
-        label: "Ver Factura",
-        icon: "pi pi-book",
-        command: () => verFactura(number),
-      },
-      {
-        label: "Ver Dian",
-        icon: "pi pi-link",
-        command: () => verDian(number),
-      },
-      {
-        label: "Descargar Factura",
-        icon: "pi pi-download",
-        command: () => descargarFactura(number),
-      },
-    ],
-  }];
+  return [
+    {
+      items: [
+        {
+          label: "Ver Factura",
+          icon: "pi pi-book",
+          command: () => verFactura(number),
+        },
+        {
+          label: "Ver Dian",
+          icon: "pi pi-link",
+          command: () => verDian(number),
+        },
+        {
+          label: "Descargar Factura",
+          icon: "pi pi-download",
+          command: () => descargarFactura(number),
+        },
+      ],
+    },
+  ];
 };
 
 const toggle = (event: Event, number: string) => {
@@ -356,7 +360,6 @@ watch(isFetching, () => {
   dataFacturas.value = data.value?.data as Facturas;
   dataVaules.value = dataFacturas?.value?.data ?? [];
 });
-
 
 onMounted(() => {
   dataFactu.value = dataVer.value?.data;

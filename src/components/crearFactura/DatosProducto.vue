@@ -28,22 +28,22 @@
       <div class="flex flex-col space-y-2">
         <label for="unitMeasureId">ID Unidad de Medida</label>
         <Select v-model="unit_measure_id" :options="dataUnidadMedida" optionLabel="name" optionValue="id"
-          placeholder="Ingrese el ID de la unidad de medida" class="w-full" filter />
+          placeholder="Ingrese el ID de la unidad de medida" class="min-w-full" filter />
       </div>
       <div class="flex flex-col space-y-2">
         <label for="standardCodeId">ID Código de Estándar</label>
         <Select v-model="standard_code_id" :options="dataIdentificacion" optionLabel="nombre" optionValue="id"
-          placeholder="Ingrese el ID del código estándar" class="w-full" filter />
+          placeholder="Ingrese el ID del código estándar" class="min-w-full" filter />
       </div>
       <div class="flex flex-col space-y-2">
         <label for="isExcluded">Excluido de IVA</label>
         <Select v-model="is_excluded" :options="dataIva" optionLabel="name" optionValue="id"
-          placeholder="Ingrese el ID del IVA" class="w-full" />
+          placeholder="Ingrese el ID del IVA" class="min-w-full" />
       </div>
       <div class="flex flex-col space-y-2">
         <label for="tributeId">ID del Tributo</label>
         <Select v-model="tribute_id" :options="dataTribute" optionLabel="name" optionValue="id"
-          placeholder="Ingrese el ID del tributo" class="w-full" filter />
+          placeholder="Ingrese el ID del tributo" class="min-w-full" filter />
       </div>
     </div>
     <div class="my-5">
@@ -59,7 +59,7 @@
             <div class="col-span-2 flex flex-col space-y-2">
               <label :for="'withholdingCode' + index">Retención - Código</label>
               <Select :id="'withholdingCode' + index" v-model="retention.code" :options="dataTribute" optionLabel="code"
-                optionValue="code" placeholder="Ingrese el código de la retención" class="w-full" filter
+                optionValue="code" placeholder="Ingrese el código de la retención" class="min-w-full" filter
                 @change="handleSelectChange(index, $event)" />
             </div>
             <div class="col-span-2 flex flex-col space-y-2">

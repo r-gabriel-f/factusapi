@@ -1,7 +1,7 @@
 <template>
   <div class="m-5">
     <div class="text-center">
-      <h1 class="text-2xl font-bold mb-6">Facturación</h1>
+      <h1 class="text-2xl font-bold mb-6">Generar Factura</h1>
     </div>
     <div class="card flex justify-center w-full">
       <Toast />
@@ -18,7 +18,7 @@
               <div
                 class="w-full border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
               >
-                <DatosGenerales @submitData="addDatageneral"/>
+                <DatosGenerales @submitData="addDatageneral" />
               </div>
               <div class="flex pt-6 justify-end w-full">
                 <Button
@@ -81,7 +81,7 @@
               <div
                 class="w-full border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
               >
-                <DatosProducto @addProduct="addProduct"/>
+                <DatosProducto @addProduct="addProduct" />
               </div>
               <div class="flex pt-6 justify-between w-full">
                 <Button
@@ -89,22 +89,47 @@
                   severity="secondary"
                   icon="pi pi-arrow-left"
                   @click="activateCallback('3')"
+                  :disabled="isCreating"
                 />
-                <Button
-                  label="Crear Factura"
-                  icon="pi pi-check"
-                  iconPos="right"
-                  @click="crearFactura"
-                />
+                <div class="relative">
+                  <Button
+                    label="Crear Factura"
+                    icon="pi pi-check"
+                    iconPos="right"
+                    @click="crearFactura"
+                    :disabled="isCreating"
+                    :class="{ 'opacity-70': isCreating }"
+                  />
+                  <div
+                    v-if="isCreating"
+                    class="absolute inset-0 flex items-center justify-center"
+                  >
+                    <ProgressSpinner
+                      style="width: 30px; height: 30px"
+                      strokeWidth="4"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </StepPanel>
         </StepPanels>
       </Stepper>
     </div>
+    <Dialog
+      v-model:visible="isCreating"
+      modal
+      :closable="false"
+      :style="{ width: '25rem' }"
+      class="p-4"
+    >
+      <div class="flex flex-col items-center">
+        <ProgressSpinner style="width: 50px; height: 50px" />
+        <span class="mt-4">Creando factura...</span>
+      </div>
+    </Dialog>
   </div>
 </template>
-
 
 <script setup lang="ts">
 import { ref } from "vue";
@@ -115,8 +140,10 @@ import DatosCliente from "./DatosCliente.vue";
 import facturasService from "../../services/Factus/facturas.service";
 import { useToast } from "primevue/usetoast";
 import { useRouter } from "vue-router";
+
 const router = useRouter();
 const toast = useToast();
+const isCreating = ref(false);
 const dataGeneral = ref<any>();
 const dataFacturacion = ref<any>();
 const dataCliente = ref<any>();
@@ -134,16 +161,19 @@ const addFacturacion = (data: any) => {
 const addProduct = (data: any) => {
   dataProduct.value = data;
 };
+
 const { mutateAsync } = facturasService.useCrearFactura();
-async function crearFactura () {
+
+async function crearFactura() {
   const payload = {
     ...dataGeneral.value,
-    billing_period : dataFacturacion.value,
+    billing_period: dataFacturacion.value,
     customer: dataCliente.value,
-    items: dataProduct.value
-  }
-  console.log(payload);
+    items: dataProduct.value,
+  };
+
   try {
+    isCreating.value = true;
     await mutateAsync(payload);
     toast.add({
       severity: "success",
@@ -159,6 +189,8 @@ async function crearFactura () {
       detail: error,
       life: 3000,
     });
+  } finally {
+    isCreating.value = false;
   }
-};
+}
 </script>

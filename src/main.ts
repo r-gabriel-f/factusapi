@@ -43,6 +43,8 @@ import Toast from 'primevue/toast';
 import  Tag  from 'primevue/tag';
 import InputNumber from 'primevue/inputnumber';
 
+import ProgressSpinner from 'primevue/progressspinner';
+
 
 const app = createApp(App)
 app.use(ToastService);
@@ -90,4 +92,6 @@ app.component('Dialog', Dialog);
 app.component('Toast', Toast);
 
 app.component('InputNumber', InputNumber);
+
+app.component('ProgressSpinner', ProgressSpinner);
 app.mount('#app')

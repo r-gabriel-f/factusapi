@@ -10,7 +10,7 @@
             optionLabel="document"
             optionValue="id"
             placeholder="Seleccione un rango"
-            class="w-full"
+            class="min-w-full"
             filter
           />
         </div>
@@ -50,7 +50,7 @@
             optionLabel="nombre"
             optionValue="id"
             placeholder="Seleccione un medio de pago"
-            class="w-full"
+            class="min-w-full"
             filter
           />
         </div>

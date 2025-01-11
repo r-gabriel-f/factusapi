@@ -4,7 +4,7 @@
       <div class="flex flex-col space-y-2">
         <label for="identificationDocumentId">Tipo de Identificación</label>
         <Select v-model="identification_document_id" :options="tiposDeDocumento" optionLabel="nombre" optionValue="id"
-          placeholder="Seleccione un tipo de identificación" class="w-full" filter />
+          placeholder="Seleccione un tipo de identificación" class="min-w-full" filter />
       </div>
       <div class="flex flex-col space-y-2">
         <label for="identificationNumber">Número de Identificación</label>
@@ -42,17 +42,17 @@
       <div class="flex flex-col space-y-2">
         <label for="legalOrganizationId">ID Tipo de Organización</label>
         <Select v-model="legal_organization_id" :options="tipoDeOrganizacion" optionLabel="nombre" optionValue="id"
-          placeholder="Ingrese el ID del tipo de organización" class="w-full" filter />
+          placeholder="Ingrese el ID del tipo de organización" class="min-w-full" filter />
       </div>
       <div class="flex flex-col space-y-2">
         <label for="tributeId">ID del Tributo</label>
         <Select v-model="tribute_id" :options="dataProducts" optionLabel="nombre" optionValue="id" placeholder="Ingrese el ID del tributo"
-          class="w-full" filter />
+          class="min-w-full" filter />
       </div>
       <div class="flex flex-col space-y-2">
         <label for="municipalityId">ID Municipio</label>
         <Select v-model="municipality_id" :options="dataMunicipios" optionLabel="name" optionValue="id"
-          placeholder="Ingrese el ID del municipio" class="w-full" filter />
+          placeholder="Ingrese el ID del municipio" class="min-w-full" filter />
       </div>
     </div>
   </div>
