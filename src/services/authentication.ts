@@ -42,6 +42,6 @@ export const logout = (): void => {
   localStorage.removeItem("token_type");
   localStorage.removeItem("expires_at");
 
-  window.location.href = "/login";
+  window.location.href = "/";
 };
 
