@@ -33,7 +33,7 @@
               </div>
               <div class="flex pt-6 justify-end w-full">
                 <Button
-                  label="Next"
+                  label="Siguiente"
                   icon="pi pi-arrow-right"
                   iconPos="right"
                   @click="activateCallback('2')"
@@ -51,13 +51,13 @@
               </div>
               <div class="flex pt-6 justify-between w-full">
                 <Button
-                  label="Back"
+                  label="Anterior"
                   severity="secondary"
                   icon="pi pi-arrow-left"
                   @click="activateCallback('1')"
                 />
                 <Button
-                  label="Next"
+                  label="Siguiente"
                   icon="pi pi-arrow-right"
                   iconPos="right"
                   @click="activateCallback('3')"
@@ -79,13 +79,13 @@
               </div>
               <div class="flex pt-6 justify-between w-full">
                 <Button
-                  label="Back"
+                  label="Anterior"
                   severity="secondary"
                   icon="pi pi-arrow-left"
                   @click="activateCallback('2')"
                 />
                 <Button
-                  label="Next"
+                  label="Siguiente"
                   icon="pi pi-arrow-right"
                   iconPos="right"
                   @click="activateCallback('4')"
@@ -103,7 +103,7 @@
               </div>
               <div class="flex pt-6 justify-between w-full">
                 <Button
-                  label="Back"
+                  label="Anterior"
                   severity="secondary"
                   icon="pi pi-arrow-left"
                   @click="activateCallback('3')"

@@ -1,6 +1,7 @@
 <template>
   <div class="card mx-5">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
+      <Toast />
       <div class="flex flex-col space-y-2">
         <label for="codeReference">Código de Referencia *</label>
         <InputText
@@ -240,6 +241,8 @@ import unidadmedidaService from "../../services/Factus/unidadmedida.service";
 import productsService from "../../services/Factus/atributes.service";
 import type { Unidadmedida } from "../../models/unidadmedida";
 import type { Product } from "../../models/product";
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
 
 const code_reference = ref("");
 const name = ref("");
@@ -304,8 +307,15 @@ const validateAndAddProduct = () => {
   );
 
   if (isFormValid && areRetentionsValid) {
+    toast.add({
+      severity: "success",
+      summary: "Producto Validado",
+      detail: `Producto ${name.value} agregado`,
+      life: 3000,
+    })
     addProduct();
   }
+
 };
 
 const addProduct = () => {
@@ -322,7 +332,6 @@ const addProduct = () => {
     tribute_id: tribute_id.value,
     withholding_taxes: withholdingEnabled.value ? retentions.value : [],
   };
-
   items.value.push(productData);
   emit("addProduct", items.value);
   resetForm();
