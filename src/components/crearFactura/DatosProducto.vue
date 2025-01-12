@@ -8,12 +8,12 @@
           v-model="code_reference"
           placeholder="Ingrese el código de referencia"
           :class="{
-            'p-invalid': (showValidation || submitted) && !code_reference,
+            'p-invalid': submitted && !code_reference,
           }"
         />
         <small
           class="text-red-500"
-          v-if="(showValidation || submitted) && !code_reference"
+          v-if="submitted && !code_reference"
         >
           Este campo es requerido
         </small>
@@ -24,11 +24,11 @@
           id="name"
           v-model="name"
           placeholder="Ingrese el nombre del producto o servicio"
-          :class="{ 'p-invalid': (showValidation || submitted) && !name }"
+          :class="{ 'p-invalid': submitted && !name }"
         />
         <small
           class="text-red-500"
-          v-if="(showValidation || submitted) && !name"
+          v-if="submitted && !name"
         >
           Este campo es requerido
         </small>
@@ -39,11 +39,11 @@
           v-model="quantity"
           inputId="quantity"
           fluid
-          :class="{ 'p-invalid': (showValidation || submitted) && !quantity }"
+          :class="{ 'p-invalid': submitted && !quantity }"
         />
         <small
           class="text-red-500"
-          v-if="(showValidation || submitted) && !quantity"
+          v-if="submitted && !quantity"
         >
           Este campo es requerido
         </small>
@@ -54,11 +54,11 @@
           v-model="price"
           inputId="price"
           fluid
-          :class="{ 'p-invalid': (showValidation || submitted) && !price }"
+          :class="{ 'p-invalid': submitted && !price }"
         />
         <small
           class="text-red-500"
-          v-if="(showValidation || submitted) && !price"
+          v-if="submitted && !price"
         >
           Este campo es requerido
         </small>
@@ -82,12 +82,12 @@
           class="min-w-full"
           filter
           :class="{
-            'p-invalid': (showValidation || submitted) && !unit_measure_id,
+            'p-invalid': submitted && !unit_measure_id,
           }"
         />
         <small
           class="text-red-500"
-          v-if="(showValidation || submitted) && !unit_measure_id"
+          v-if="submitted && !unit_measure_id"
         >
           Este campo es requerido
         </small>
@@ -103,12 +103,12 @@
           class="min-w-full"
           filter
           :class="{
-            'p-invalid': (showValidation || submitted) && !standard_code_id,
+            'p-invalid': submitted && !standard_code_id,
           }"
         />
         <small
           class="text-red-500"
-          v-if="(showValidation || submitted) && !standard_code_id"
+          v-if="submitted && !standard_code_id"
         >
           Este campo es requerido
         </small>
@@ -123,12 +123,12 @@
           placeholder="Seleccione si está excluido"
           class="min-w-full"
           :class="{
-            'p-invalid': (showValidation || submitted) && is_excluded === null,
+            'p-invalid': submitted && is_excluded === null,
           }"
         />
         <small
           class="text-red-500"
-          v-if="(showValidation || submitted) && is_excluded === null"
+          v-if="submitted && is_excluded === null"
         >
           Este campo es requerido
         </small>
@@ -143,11 +143,11 @@
           placeholder="Seleccione el tributo"
           class="min-w-full"
           filter
-          :class="{ 'p-invalid': (showValidation || submitted) && !tribute_id }"
+          :class="{ 'p-invalid': submitted && !tribute_id }"
         />
         <small
           class="text-red-500"
-          v-if="(showValidation || submitted) && !tribute_id"
+          v-if="submitted && !tribute_id"
         >
           Este campo es requerido
         </small>
@@ -181,7 +181,7 @@
                 filter
                 :class="{
                   'p-invalid':
-                    (showValidation || submitted) &&
+                    submitted &&
                     withholdingEnabled &&
                     !retention.code,
                 }"
@@ -189,7 +189,7 @@
               />
               <small
                 class="text-red-500"
-                v-if="(showValidation || submitted) && withholdingEnabled && !retention.code"
+                v-if="submitted && withholdingEnabled && !retention.code"
               >
                 Este campo es requerido cuando se aplican retenciones
               </small>
@@ -203,14 +203,14 @@
                 type="text"
                 :class="{
                   'p-invalid':
-                    (showValidation || submitted) &&
+                    submitted &&
                     withholdingEnabled &&
                     !retention.withholding_tax_rate,
                 }"
               />
               <small
                 class="text-red-500"
-                v-if="(showValidation || submitted) && withholdingEnabled && !retention.withholding_tax_rate"
+                v-if="submitted && withholdingEnabled && !retention.withholding_tax_rate"
               >
                 Este campo es requerido cuando se aplican retenciones
               </small>
@@ -229,16 +229,13 @@
         label="Agregar Producto"
         icon="pi pi-plus"
         @click="validateAndAddProduct"
-        :disabled="!isValid"
-        :class="{ 'p-button-disabled': !isValid }"
       />
     </div>
   </div>
 </template>
 
-
 <script setup lang="ts">
-import { onMounted, ref, watch, computed } from "vue";
+import { onMounted, ref, watch } from "vue";
 import unidadmedidaService from "../../services/Factus/unidadmedida.service";
 import productsService from "../../services/Factus/atributes.service";
 import type { Unidadmedida } from "../../models/unidadmedida";
@@ -249,13 +246,12 @@ const name = ref("");
 const quantity = ref<number>(0);
 const price = ref<number>(0);
 const discount_rate = ref<number>(0);
-const tax_rate = ref("");
+const tax_rate = ref<number>(0);
 const unit_measure_id = ref("");
 const standard_code_id = ref("");
 const is_excluded = ref<number | null>(null);
 const tribute_id = ref("");
 const submitted = ref(false);
-const showValidation = ref(false);
 
 const withholdingEnabled = ref(false);
 
@@ -265,32 +261,6 @@ interface Retention {
 }
 
 const retentions = ref<Retention[]>([]);
-const isValid = computed(() => {
-  const requiredFieldsValid =
-    code_reference.value?.trim() !== "" &&
-    name.value?.trim() !== "" &&
-    quantity.value > 0 &&
-    price.value > 0 &&
-    unit_measure_id.value !== "" &&
-    is_excluded.value !== null &&
-    standard_code_id.value !== "" &&
-    tribute_id.value !== "";
-
-  if (withholdingEnabled.value && retentions.value.length > 0) {
-    const retentionsValid = retentions.value.every(
-      (retention) =>
-        retention.code?.trim() !== "" &&
-        retention.withholding_tax_rate?.trim() !== ""
-    );
-    return requiredFieldsValid && retentionsValid;
-  }
-
-  return requiredFieldsValid;
-});
-
-const startValidation = () => {
-  showValidation.value = true;
-};
 
 const handleSelectChange = (index: number, event: any) => {
   const selectedCode = event.value;
@@ -313,7 +283,27 @@ const emit = defineEmits(["addProduct"]);
 
 const validateAndAddProduct = () => {
   submitted.value = true;
-  if (isValid.value) {
+  
+  const isFormValid = 
+    code_reference.value?.trim() !== "" &&
+    name.value?.trim() !== "" &&
+    quantity.value > 0 &&
+    price.value > 0 &&
+    unit_measure_id.value !== "" &&
+    is_excluded.value !== null &&
+    standard_code_id.value !== "" &&
+    tribute_id.value !== "";
+
+  const areRetentionsValid = !withholdingEnabled.value || (
+    withholdingEnabled.value && retentions.value.length > 0 &&
+    retentions.value.every(
+      (retention) =>
+        retention.code?.trim() !== "" &&
+        retention.withholding_tax_rate?.trim() !== ""
+    )
+  );
+
+  if (isFormValid && areRetentionsValid) {
     addProduct();
   }
 };
@@ -325,7 +315,7 @@ const addProduct = () => {
     quantity: quantity.value,
     price: price.value,
     discount_rate: discount_rate.value,
-    tax_rate: tax_rate.value ? parseFloat(tax_rate.value).toFixed(2) : "0.00",
+    tax_rate: tax_rate.value ? tax_rate.value : "0.00",
     unit_measure_id: unit_measure_id.value,
     standard_code_id: standard_code_id.value || null,
     is_excluded: is_excluded.value,
@@ -344,7 +334,7 @@ const resetForm = () => {
   quantity.value = 0;
   price.value = 0;
   discount_rate.value = 0;
-  tax_rate.value = "";
+  tax_rate.value = 0;
   unit_measure_id.value = "";
   standard_code_id.value = "";
   is_excluded.value = null;
@@ -352,7 +342,6 @@ const resetForm = () => {
   withholdingEnabled.value = false;
   retentions.value = [];
   submitted.value = false;
-  showValidation.value = false;
 };
 
 const dataUnidadMedida = ref<Unidadmedida[]>([]);
@@ -392,26 +381,4 @@ watch(isFetching, () => {
 watch(isFetchedProduct, () => {
   dataTribute.value = datProduct.value?.data ?? [];
 });
-
-watch(
-  [
-    code_reference,
-    name,
-    quantity,
-    price,
-    tax_rate,
-    unit_measure_id,
-    standard_code_id,
-    is_excluded,
-    tribute_id,
-    retentions,
-    withholdingEnabled,
-  ],
-  () => {
-    if (!showValidation.value) {
-      startValidation();
-    }
-  },
-  { deep: true }
-);
 </script>

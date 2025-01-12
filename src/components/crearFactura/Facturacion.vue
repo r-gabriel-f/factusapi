@@ -20,9 +20,9 @@
         </StepList>
         <StepPanels>
           <StepPanel v-slot="{ activateCallback }" value="1">
-            <div class="flex flex-col h-[700px] items-center justify-center">
+            <div class="flex flex-col items-center justify-center">
               <div
-                class="w-full border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
+                class="w-full border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium min-h-[630px]"
               >
                 <DatosGenerales
                   @submitData="addDatageneral"
@@ -43,9 +43,9 @@
             </div>
           </StepPanel>
           <StepPanel v-slot="{ activateCallback }" value="2">
-            <div class="flex flex-col h-[700px] items-center justify-center">
+            <div class="flex flex-col items-center justify-center">
               <div
-                class="w-full border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium"
+                class="w-full border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium min-h-[630px]"
               >
                 <DatosFacturacion @addFacturacion="addFacturacion" />
               </div>
